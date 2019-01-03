@@ -9,3 +9,5 @@ MINIO_VOLUMES="{{ minio_path }}/minio/T{{ item }}"
 MINIO_OPTS="--address :{{ minio_start_port|int + item|int }}"
 MINIO_ACCESS_KEY="{{ lookup('password', '' + minio_cluster + item + ':accessKey length=20 chars=ascii_letters,digits')|upper }}"
 MINIO_SECRET_KEY="{{ lookup('password', '' + minio_cluster + item + ':secretKey length=40 chars=ascii_letters,digits') }}"
+MINIO_BROWSER={{ minio_arg.webui }}
+MINIO_DRIVE_SYNC={{ minio_arg.drive_sync }}

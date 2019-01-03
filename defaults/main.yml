@@ -9,7 +9,9 @@ minio_start_port: '9000'
 
 # System Variables #
 minio_arg:
+  drive_sync: 'on' # Enable synchronous mode for all data operations
   uid: '2021'
   ulimit_nofile: '65535'
   ulimit_nproc: '65535'
   user: 'minio'
+  webui: 'on' # Enable or Disable access to web UI
