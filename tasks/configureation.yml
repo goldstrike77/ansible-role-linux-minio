@@ -30,6 +30,7 @@
     group: 'root'
     mode: 0644
   with_sequence: start=1 end={{ minio_tenants|int }}
+  no_log: true
   register: soft_config
 
 - name: Minio systemd service file transfer
