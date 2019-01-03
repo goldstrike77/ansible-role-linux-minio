@@ -1,0 +1,9 @@
+---
+- name: Allow minio service port
+  firewalld:
+    port: '{{ minio_start_port|int + item|int }}/tcp'
+    zone: 'public'
+    permanent: 'true'
+    immediate: 'true'
+    state: 'enabled'
+  with_sequence: start=1 end={{ minio_tenants|int }}

@@ -1,2 +1,21 @@
 ---
-# vars file for ansible-role-linux-minio
+minio_soft_url: 'http://cache.omygods.com'
+
+architecture:
+  amd64: 'amd64'
+  x86_64: 'amd64'
+  armv6l: 'arm'
+  armv7l: 'arm'
+  aarch64: 'arm64'
+  32-bit: '386'
+  64-bit: 'amd64'
+
+minio_servers: "\
+  {% set _minio_servers = [] %}\
+  {% for host in groups[group_names[-1]] %}\
+    {% set _minio_cluster = hostvars[host]['minio_cluster'] | default('', true) %}\
+    {% if ( _minio_cluster == hostvars[host]['minio_cluster']) %}\
+      {% if _minio_servers.append(hostvars[host]['ansible_host']) %}{% endif %}\
+    {% endif %}\
+  {% endfor %}\
+  {{ _minio_servers }}"

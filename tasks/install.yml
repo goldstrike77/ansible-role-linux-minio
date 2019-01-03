@@ -1,0 +1,14 @@
+---
+- name: Install minio server & client
+  get_url:
+    url: '{{ minio_soft_url }}/{{ item.state }}/{{ item.file }}/release/{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}/{{ item.file}}'
+    dest: '/usr/local/bin/{{ item.file }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+    validate_certs: 'no'
+  with_items:
+    - { state: 'client', file: 'mc' }
+    - { state: 'server', file: 'minio' }
+  register: soft_update
+  ignore_errors: true

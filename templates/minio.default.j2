@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+
+# Minio local/remote volumes.
+{% if minio_servers | length > 1 %}
+MINIO_VOLUMES='http://{{ minio_servers | list | join(minio_path + "/minio/T" + item + " http://") }}{{ minio_path }}/minio/T{{ item|int }}'
+{% else %}
+MINIO_VOLUMES="{{ minio_path }}/minio/T{{ item }}"
+{% endif %}
+MINIO_OPTS="--address :{{ minio_start_port|int + item|int }}"
+MINIO_ACCESS_KEY="{{ lookup('password', '' + minio_cluster + item + ':accessKey length=20 chars=ascii_letters,digits')|upper }}"
+MINIO_SECRET_KEY="{{ lookup('password', '' + minio_cluster + item + ':secretKey length=40 chars=ascii_letters,digits') }}"
