@@ -1,4 +1,4 @@
-<p><img src="https://raw.githubusercontent.com/goldstrike77/goldstrike77.github.io/master/img/logo/logo_linux.png" align="right" /></p>
+<p><img src="https://raw.githubusercontent.com/goldstrike77/goldstrike77.github.io/master/img/logo/logo_minio.png" align="right" /></p>
 
 ansible-role-linux-minio
 ========================
