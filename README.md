@@ -1,3 +1,4 @@
+<p><img src="https://raw.githubusercontent.com/goldstrike77/goldstrike77.github.io/master/img/logo/logo_linux.png" align="right" /></p>
 <p><img src="https://avatars0.githubusercontent.com/u/695951?s=200&v=4" alt="minio logo" title="minio" align="right" height="60" /></p>
 
 ansible-role-linux-minio
