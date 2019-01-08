@@ -8,3 +8,6 @@ MINIO_ACCESS_KEY="{{ lookup('password', '' + minio_cluster + item + ':accessKey 
 MINIO_SECRET_KEY="{{ lookup('password', '' + minio_cluster + item + ':secretKey length=40 chars=ascii_letters,digits') }}"
 MINIO_BROWSER={{ minio_arg.webui }}
 MINIO_DRIVE_SYNC={{ minio_arg.drive_sync }}
+MINIO_COMPRESS="{{ minio_arg.compress_enabled }}"
+MINIO_COMPRESS_EXTENSIONS=".{{ minio_arg.compress_extensions | join(',.') }}"
+MINIO_COMPRESS_MIMETYPES="{{ minio_arg.compress_mime_types | join(',') }}"

@@ -9,6 +9,16 @@ minio_start_port: '9000'
 
 # System Variables #
 minio_arg:
+  compress_enabled: 'true'
+  compress_extensions:
+    - 'txt'
+    - 'log'
+    - 'csv'
+    - 'json'
+  compress_mime_types:
+    - 'text/csv'
+    - 'text/plain'
+    - 'application/json'
   drive_sync: 'on' # Enable synchronous mode for all data operations
   uid: '2021'
   ulimit_nofile: '65535'

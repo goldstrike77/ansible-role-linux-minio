@@ -22,6 +22,17 @@
     mode: 0755
   with_sequence: start=1 end={{ minio_tenants|int }}
 
+- name: Configure kernel parameters
+  sysctl:
+    name: '{{ item.variable }}'
+    value: '{{ item.value }}'
+    state: 'present'
+    reload: 'yes'
+    sysctl_set: 'yes'
+    sysctl_file: '/etc/sysctl.d/20-sysctl.conf'
+  with_items:
+    - '{{ minio_kernel_parameters }}'
+
 - name: Minio configure file transfer
   template:
     src: 'minio.default.j2'
