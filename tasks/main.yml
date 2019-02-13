@@ -18,4 +18,4 @@
       shell: echo ''
       notify: 'Ensure minio service is enabled'
       when: soft_update|changed or soft_config|changed or soft_systemd|changed
-  when: minio_servers | length < 1 or minio_servers | length > 3
+  when: minio_servers | length == 1 or minio_servers | length > 3
