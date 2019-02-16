@@ -10,7 +10,7 @@ __Table of Contents__
 - [Overview](#overview)
 - [Requirements](#requirements)
   * [Operating systems](#operating-systems)
-  * [Minio Versions](#MongoDB-versions)
+  * [Minio Versions](#Minio-versions)
 - [ Role variables](#Role-variables)
   * [Minimal Configuration](#minimal-configuration)
   * [Main Configuration](#Main-parameters)
