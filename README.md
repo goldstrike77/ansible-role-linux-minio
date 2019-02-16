@@ -52,7 +52,7 @@ The `minio_cluster` should contain the Minio distributed cluster name.
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
 
 ##### General parameters
-* `minio_cluster`: Specify distributed cluster name.
+* `minio_cluster`: Specify the distributed cluster name.
 * `minio_path`: Specify the Minio data directory.
 * `minio_tenants`: Specify the number of tenants.
 
@@ -64,7 +64,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `minio_arg.compress_extensions`: Which extensions are included by default for compression.
 * `minio_arg.compress_mime_types`: Which mime-types are included by default for compression.
 * `minio_arg.drive_sync`: Enable synchronous mode for all data operations.
-* `minio_arg.uid`: '2021' System user ID for running minio services.
+* `minio_arg.uid`: System user ID for running minio services.
 * `minio_arg.ulimit_nofile`: The number of files launched by systemd.
 * `minio_arg.ulimit_nproc`: The number of processes launched by systemd.
 * `minio_arg.user`:  System user name for running minio services.
