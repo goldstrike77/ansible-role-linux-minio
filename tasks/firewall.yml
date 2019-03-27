@@ -6,4 +6,4 @@
     permanent: 'true'
     immediate: 'true'
     state: 'enabled'
-  with_sequence: start=1 end={{ minio_tenants|int }}
+  with_sequence: start=1 end={{ minio_tenants|length|int }}
