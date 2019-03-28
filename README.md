@@ -57,7 +57,11 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ##### General parameters
 * `minio_cluster`: Specify the distributed cluster name.
 * `minio_path`: Specify the Minio data directory.
-* `minio_tenants`: Specify the number of tenants.
+* `minio_tenants`: Specify the name of tenants.
+* `consul_is_register`: a boolean value, whether register a client service with consul.
+* `consul_clients`: Consul client addresses list.
+* `consul_http_port`: Consul client listen port.
+* `consul_exporter_token`: Consul client ACL token.
 
 ##### Listen port
 * `minio_start_port`: The start port of Minio instance.

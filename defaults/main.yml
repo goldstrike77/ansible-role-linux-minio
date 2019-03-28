@@ -5,6 +5,12 @@ minio_path: '/data' # Specify the Minio data directory
 minio_tenants: # Specify the name of tenants
   - 'other'
   - 'thanos'
+consul_is_register: false
+consul_exporter_token: '00000000-0000-0000-0000-000000000000'
+consul_clients:
+  - '1.1.1.1'
+  - '1.1.1.2'
+consul_http_port: '8500'
 
 # Listen port #
 minio_start_port: '9000'
