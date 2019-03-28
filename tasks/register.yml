@@ -1,0 +1,15 @@
+---
+- name: Register exporter service with an http health check
+  uri:
+    url: 'http://{{ consul_clients_item }}:{{ consul_http_port }}/v1/agent/service/register'
+    method: 'PUT'
+    headers:
+      X-Consul-Token: "{{ consul_exporter_token }}"
+    body: '{"ID":"{{ inventory_hostname | upper }}_minio_exporter_t_{{ item | upper }}","name":"minio_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ minio_start_port | int + 1 + index }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}","tenant":"{{ item | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ minio_start_port | int + 1 + index }}/minio/prometheus/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"5s"}]}'
+    body_format: 'json'
+  loop: '{{ minio_tenants }}'
+  loop_control:
+    index_var: index
+  environment:
+    no_proxy: '{{ consul_clients_item }}'
+  no_log: true

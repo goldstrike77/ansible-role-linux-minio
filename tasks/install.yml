@@ -6,6 +6,8 @@
     owner: 'root'
     group: 'root'
     mode: '0755'
+    timeout: '60'
+    force: 'yes'
     validate_certs: 'no'
   with_items:
     - { state: 'client', file: 'mc' }

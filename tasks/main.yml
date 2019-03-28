@@ -18,4 +18,10 @@
       shell: echo ''
       notify: 'Ensure minio service is enabled'
       when: soft_update|changed or soft_config|changed or soft_systemd|changed
+    - include_tasks: 'register.yml'
+      with_items:
+        - '{{ consul_clients }}'
+      loop_control:
+         loop_var: consul_clients_item
+      when: consul_is_register
   when: minio_servers | length == 1 or minio_servers | length > 3
