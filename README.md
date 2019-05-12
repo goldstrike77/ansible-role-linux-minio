@@ -58,10 +58,13 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `minio_cluster`: Specify the distributed cluster name.
 * `minio_path`: Specify the Minio data directory.
 * `minio_tenants`: Specify the name of tenants.
-* `consul_is_register`: a boolean value, whether register a client service with consul.
-* `consul_clients`: Consul client addresses list.
-* `consul_http_port`: Consul client listen port.
-* `consul_exporter_token`: Consul client ACL token.
+
+##### Service Mesh
+* `environments`: Define the service environment.
+* `consul_public_register`: Whether register a exporter service with public consul client.
+* `consul_public_exporter_token`: Public Consul client ACL token.
+* `consul_public_clients`: List of public consul clients.
+* `consul_public_http_port`: The consul HTTP API port.
 
 ##### Listen port
 * `minio_start_port`: The start port of Minio instance.
@@ -123,6 +126,11 @@ You can also use the group_vars or the host_vars files for setting the variables
       ulimit_nproc: '65535'
       user: 'minio'
       webui: 'on'
+    environments: 'SIT'
+    consul_public_register: false
+    consul_public_exporter_token: '00000000-0000-0000-0000-000000000000'
+    consul_public_clients: 'localhost'
+    consul_public_http_port: '8500'
 
 ## License
 ![](https://img.shields.io/badge/MIT-purple.svg?style=for-the-badge)
