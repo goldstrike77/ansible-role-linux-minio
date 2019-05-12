@@ -1,6 +1,7 @@
 ---
 # General parameters #
-#minio_cluster: 'demo'
+minio_is_install: 'false' # A boolean value, whether install the Minio.
+minio_cluster: 'demo' # The Minio distributed cluster name.
 minio_path: '/data' # Specify the Minio data directory
 minio_tenants: # Specify the name of tenants
   - 'other'

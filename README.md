@@ -43,14 +43,6 @@ The following list of supported the Minio releases:
 * All Release
 
 ## Role variables
-### Minimal configuration
-
-In order to get the Minio running, you'll have to define the following properties before executing the role:
-
-* minio_cluster
-
-The `minio_cluster` should contain the Minio distributed cluster name.
-
 ### Main parameters #
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
 
