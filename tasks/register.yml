@@ -1,7 +1,7 @@
 ---
 - name: Register exporter service with an http health check
   uri:
-    url: 'http://{{ item }}:{{ consul_public_http_port }}/v1/agent/service/register'
+    url: 'http://{{ consul_public_clients_item }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
     body: '{"ID":"{{ inventory_hostname | upper }}_minio_exporter_t_{{ item | upper }}","name":"minio_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ minio_start_port | int + 1 + index }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}","tenant":"{{ item | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ minio_start_port | int + 1 + index }}/minio/prometheus/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"5s"}]}'
     body_format: 'json'
@@ -11,13 +11,15 @@
       X-Requested-By: '{{ ansible_default_ipv4.address }}'
       cache-control: 'no-cache'
   environment:
-    no_proxy: '{{ item }}'
-  loop: '{{ consul_public_clients|flatten(levels=1) }}'
+    no_proxy: '{{ consul_public_clients_item }}'
+  loop: '{{ minio_tenants }}'
+  loop_control:
+    index_var: index
   when: consul_public_register
   register: register_status
   until: register_status.status == 200
   retries: 3
   delay: 3
-  no_log: true
+#  no_log: true
   changed_when: false
   failed_when: false
