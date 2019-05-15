@@ -13,7 +13,7 @@ architecture:
 minio_kernel_parameters:
   - { variable: 'kernel.sched_min_granularity_ns', value: '10000000' }
   - { variable: 'kernel.sched_wakeup_granularity_ns', value: '15000000' }
-  - { variable: 'net.core.rmem_max', value: '540000' }
+  - { variable: 'net.core.rmem_max', value: '2097152' }
   - { variable: 'vm.dirty_background_ratio', value: '1' }
   - { variable: 'vm.dirty_ratio', value: '5' }
   - { variable: 'vm.swappiness', value: '10' }
