@@ -46,7 +46,7 @@ The following list of supported the Minio releases:
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
 
 ##### General parameters
-* `minio_cluster`: Specify the distributed cluster name.
+* `minio_cluster`: The Minio distributed cluster name, Must sets in hostvars.
 * `minio_path`: Specify the Minio data directory.
 * `minio_tenants`: Specify the name of tenants.
 
