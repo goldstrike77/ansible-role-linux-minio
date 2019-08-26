@@ -23,5 +23,5 @@
         - '{{ consul_public_clients }}'
       loop_control:
          loop_var: consul_public_clients_item
-      when: consul_public_register
+      when: consul_public_register | bool
   when: minio_servers | length == 1 or minio_servers | length > 3

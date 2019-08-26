@@ -1,4 +1,8 @@
 ---
+- name: Gathering service facts
+  service_facts:
+  register: services_state
+
 - name: Allow minio service port
   firewalld:
     port: '{{ minio_start_port|int + item|int }}/tcp'
@@ -7,3 +11,4 @@
     immediate: 'true'
     state: 'enabled'
   with_sequence: start=1 end={{ minio_tenants|length|int }}
+  when: services_state.ansible_facts.services["firewalld.service"].state == 'running'
