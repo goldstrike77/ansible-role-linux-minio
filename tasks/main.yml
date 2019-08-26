@@ -18,6 +18,8 @@
       shell: echo ''
       notify: 'Ensure minio service is enabled'
       when: soft_update is changed or soft_config is changed or soft_systemd is changed
+    - name: Force the handler to run immediately
+      meta: flush_handlers
     - include_tasks: 'register.yml'
       with_items:
         - '{{ consul_public_clients }}'

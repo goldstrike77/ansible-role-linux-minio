@@ -2,9 +2,9 @@
 - name: Enable Minio service
   systemd:
     name: 'minio-T_{{ item }}.service'
-    enabled: yes
-    state: restarted
-    daemon_reload: yes
+    enabled: 'yes'
+    state: 'restarted'
+    daemon_reload: 'yes'
   async: 1
   poll: 0
   with_items: '{{ minio_tenants }}'
