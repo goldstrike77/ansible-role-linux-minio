@@ -8,6 +8,11 @@
 
 - name: Minio operation
   block:
+    - name: Proxy traffic using NGinx
+      include: 'nginx.yml'
+      when: minio_ngx_dept | bool
+    - name: Straight to getenforce selinux status
+      include: 'selinux.yml'
     - name: Configure the minio firewall
       include: 'firewall.yml'
     - name: Installation the minio

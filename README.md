@@ -59,8 +59,24 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `consul_public_clients`: List of public consul clients.
 * `consul_public_http_port`: The consul HTTP API port.
 
+##### Role dependencies
+* `minio_ngx_dept`: A boolean value, whether proxy web interface and API traffic using NGinx.
+
 ##### Listen port
 * `minio_start_port`: The start port of Minio instance.
+
+##### NGinx parameters
+* `minio_ngx_site_path`: Specify the NGinx site directory.
+* `minio_ngx_logs_path`:  Specify the NGinx logs directory.
+* `minio_ngx_block_agents`: Enables or disables block unsafe User Agents.
+* `minio_ngx_block_string`: Enables or disables block includes Exploits / File injections / Spam / SQL injections.
+* `minio_ngx_compress`: Enables or disables compression.
+* `minio_ngx_pagespeed`: Enables or disables pagespeed modules.
+* `minio_ngx_port_http`: NGinx HTTP listen port.
+* `minio_ngx_port_https`: NGinx HTTPs listen port.
+* `minio_ngx_ssl_protocols`: intermediate or modern, defines SSL protocol profile.
+* `minio_ngx_version`: extras or standard
+* `minio_ngx_client_max_body_size`: The maximum allowed size of the client request body.
 
 ##### Server System Variables
 * `minio_arg.compress_enabled`: Allows streaming compression to ensure efficient disk space usage.
@@ -77,7 +93,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 There are some variables in vars/main.yml:
 
 ## Dependencies
-There are no dependencies on other roles.
+- Ansible versions > 2.8 are supported.
+- [NGinx](https://github.com/goldstrike77/ansible-role-linux-nginx.git)
 
 ## Example
 
@@ -101,7 +118,19 @@ You can also use the group_vars or the host_vars files for setting the variables
 
     minio_path: '/data'
     minio_tenants: '2'
+    minio_ngx_dept: false
     minio_start_port: '9000'
+    minio_ngx_site_path: '{{ minio_path }}/nginx_site'
+    minio_ngx_logs_path: '{{ minio_path }}/nginx_logs'
+    minio_ngx_block_agents: true
+    minio_ngx_block_string: true
+    minio_ngx_compress: true
+    minio_ngx_pagespeed: true
+    minio_ngx_port_http: '80'
+    minio_ngx_port_https: '443'
+    minio_ngx_ssl_protocols: 'modern'
+    minio_ngx_version: 'extras'
+    minio_ngx_client_max_body_size: '100m'
     minio_arg:
       compress_enabled: 'true'
       compress_extensions:
