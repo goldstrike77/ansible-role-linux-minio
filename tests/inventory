@@ -1,3 +1,4 @@
 node01 ansible_host='x.x.x.x' minio_cluster='demo'
 node02 ansible_host='x.x.x.x' minio_cluster='demo'
 node03 ansible_host='x.x.x.x' minio_cluster='demo'
+node04 ansible_host='x.x.x.x' minio_cluster='demo'

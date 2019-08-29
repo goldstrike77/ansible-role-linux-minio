@@ -104,6 +104,7 @@ See tests/inventory for an example.
     node01 ansible_host='192.168.1.10' minio_cluster='demo'
     node02 ansible_host='192.168.1.11' minio_cluster='demo'
     node03 ansible_host='192.168.1.12' minio_cluster='demo'
+    node04 ansible_host='192.168.1.13' minio_cluster='demo'
 
 ### Vars in role configuration
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
