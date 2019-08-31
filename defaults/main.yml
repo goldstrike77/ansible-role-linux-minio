@@ -25,8 +25,8 @@ minio_ngx_dept: false # A boolean value, whether proxy web interface and API tra
 minio_start_port: '9000'
 
 # NGinx parameters #
-minio_ngx_site_path: '{{ minio_path }}/nginx_site' # Specify the NGinx site directory.
-minio_ngx_logs_path: '{{ minio_path }}/nginx_logs' # Specify the NGinx logs directory.
+minio_ngx_site_path: '{{ minio_path }}/nginx/site' # Specify the NGinx site directory.
+minio_ngx_logs_path: '{{ minio_path }}/nginx/logs' # Specify the NGinx logs directory.
 minio_ngx_block_agents: true # Enables or disables block unsafe User Agents.
 minio_ngx_block_string: true # Enables or disables block includes Exploits / File injections / Spam / SQL injections.
 minio_ngx_compress: true # Enables or disables compression.
