@@ -10,5 +10,5 @@
     permanent: 'true'
     immediate: 'true'
     state: 'enabled'
-  with_sequence: start=1 end={{ minio_tenants|length|int }}
+  with_sequence: start=1 end={{ minio_tenants | length | int }}
   when: services_state.ansible_facts.services["firewalld.service"].state == 'running'

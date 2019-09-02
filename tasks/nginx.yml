@@ -5,7 +5,7 @@
 
 - name: Gather tenants site variables for NGinx
   set_fact:
-    minio_ngx_site: '{{ minio_ngx_site + [ { "domain": item,"syntax":["location / {","  proxy_buffering off;","  proxy_set_header Host $http_host;","  proxy_http_version 1.1;","  proxy_read_timeout 15m;","  proxy_send_timeout 15m;","  proxy_request_buffering off;","  valid_referers none "+item+";","  if ($invalid_referer) { return 403; }","  proxy_pass http://backend_"+item+"/;","}"],"backend_address": minio_servers,"backend_port": minio_start_port | int + 1 + index,"sticky": "ip_hash","keepaliv": ansible_processor_vcpus * 4 } ] }}'
+    minio_ngx_site: '{{ minio_ngx_site + [ { "domain": item,"syntax":["location / {","  proxy_buffering off;","  proxy_set_header Host $http_host;","  proxy_http_version 1.1;","  proxy_read_timeout 15m;","  proxy_send_timeout 15m;","  proxy_request_buffering off;","  client_max_body_size "+minio_ngx_client_max_body_size+";","  valid_referers none "+item+";","  if ($invalid_referer) { return 403; }","  proxy_pass http://backend_"+item+"/;","}"],"backend_address": minio_servers,"backend_port": minio_start_port | int + 1 + index,"sticky": "ip_hash","keepaliv": ansible_processor_vcpus * 4 } ] }}'
   loop: '{{ minio_tenants }}'
   loop_control:
     index_var: index
@@ -24,7 +24,6 @@
     ngx_ssl_protocols: '{{ minio_ngx_ssl_protocols }}'
     ngx_site_path: '{{ minio_ngx_site_path }}'
     ngx_logs_path: '{{ minio_ngx_logs_path }}'
-    ngx_client_max_body_size: '{{ minio_ngx_client_max_body_size }}'
     ngx_allow_methods:
       - 'POST'
       - 'PUT'

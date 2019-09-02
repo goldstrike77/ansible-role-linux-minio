@@ -15,6 +15,8 @@
       include: 'selinux.yml'
     - name: Configure the minio firewall
       include: 'firewall.yml'
+    - name: Include tasks for specific OS
+      include: '{{ ansible_os_family }}.yml'
     - name: Installation the minio
       include: 'install.yml'
     - name: Configuration the minio
@@ -25,10 +27,13 @@
       when: soft_update is changed or soft_config is changed or soft_systemd is changed
     - name: Force the handler to run immediately
       meta: flush_handlers
-    - include_tasks: 'register.yml'
-      with_items:
-        - '{{ consul_public_clients }}'
+    - name: Include prometheus exporter tasks
+      include: 'register.yml'
+      loop: '{{ consul_public_clients }}'
       loop_control:
-         loop_var: consul_public_clients_item
+        loop_var: consul_public_clients_item
       when: consul_public_register | bool
+    - name: Bucket operation
+      include: 'bucket.yml'
+      when: minio_servers[0] in ansible_default_ipv4.address
   when: minio_servers | length == 1 or minio_servers | length > 3

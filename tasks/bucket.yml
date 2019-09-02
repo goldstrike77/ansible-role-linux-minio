@@ -1,0 +1,13 @@
+---
+- name: Create a public bucket
+  s3_bucket:
+    name: 'public'
+    aws_access_key: "{{ lookup('password', '' + minio_cluster + item + ':accessKey length=20 chars=ascii_letters,digits')|upper }}"
+    aws_secret_key: "{{ lookup('password', '' + minio_cluster + item + ':secretKey length=40 chars=ascii_letters,digits') }}"
+    s3_url: 'http://{{ ansible_default_ipv4.address }}:{{ minio_start_port | int + index + 1 }}'
+    validate_certs: 'no'
+  environment:
+    no_proxy: '{{ ansible_default_ipv4.address }}'
+  loop: '{{ minio_tenants }}'
+  loop_control:
+    index_var: index
