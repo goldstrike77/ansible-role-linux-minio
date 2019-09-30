@@ -11,12 +11,12 @@
     - name: Proxy traffic using NGinx
       include: 'nginx.yml'
       when: minio_ngx_dept | bool
+    - name: Include tasks for specific OS
+      include: '{{ ansible_os_family }}.yml'
     - name: Straight to getenforce selinux status
       include: 'selinux.yml'
     - name: Configure the minio firewall
       include: 'firewall.yml'
-    - name: Include tasks for specific OS
-      include: '{{ ansible_os_family }}.yml'
     - name: Installation the minio
       include: 'install.yml'
     - name: Configuration the minio
