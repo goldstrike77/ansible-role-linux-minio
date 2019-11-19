@@ -37,7 +37,7 @@ minio_ngx_pagespeed: true # Enables or disables pagespeed modules.
 minio_ngx_port_http: '80' # NGinx HTTP listen port.
 minio_ngx_port_https: '443' # NGinx HTTPs listen port.
 minio_ngx_ssl_protocols: 'modern' # intermediate or modern, defines SSL protocol profile.
-minio_ngx_version: 'extras' # extras or standard
+minio_ngx_version: 'standard' # extras or standard
 minio_ngx_client_max_body_size: '100m' # The maximum allowed size of the client request body.
 
 # System Variables #
