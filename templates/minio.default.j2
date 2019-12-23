@@ -1,3 +1,4 @@
+MINIO_PROMETHEUS_AUTH_TYPE="public"
 {% if minio_servers | length > 1 %}
 MINIO_VOLUMES='http://{{ minio_servers | list | join(minio_path + "/minio/T_" + item + " http://") }}{{ minio_path }}/minio/T_{{ item }}'
 {% else %}
