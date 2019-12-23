@@ -11,3 +11,10 @@ MINIO_DRIVE_SYNC={{ minio_arg.drive_sync }}
 MINIO_COMPRESS="{{ minio_arg.compress_enabled }}"
 MINIO_COMPRESS_EXTENSIONS=".{{ minio_arg.compress_extensions | join(',.') }}"
 MINIO_COMPRESS_MIMETYPES="{{ minio_arg.compress_mime_types | join(',') }}"
+{% if minio_arg.cache | bool %}
+MINIO_CACHE="on"
+MINIO_CACHE_DRIVES="{{ minio_path }}/cache/minio/T_{{ item }}"
+MINIO_CACHE_EXPIRY={{ minio_arg.cache_expiry }}
+MINIO_CACHE_EXCLUDE="{{ minio_arg.cache_exclude }}"
+MINIO_CACHE_QUOTA={{ minio_arg.cache_quota }}
+{% endif %}

@@ -22,6 +22,16 @@
     mode: '0755'
   with_items: '{{ minio_tenants }}'
 
+- name: Creating Minio tenants cache drives
+  file:
+    dest: '{{ minio_path }}/cache/minio/T_{{ item }}'
+    state: 'directory'
+    owner: '{{ minio_arg.user }}'
+    group: '{{ minio_arg.user }}'
+    mode: '0755'
+  with_items: '{{ minio_tenants }}'
+  when: minio_arg.cache | bool
+
 - name: Configure kernel parameters
   sysctl:
     name: '{{ item.variable }}'

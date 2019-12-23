@@ -1,6 +1,6 @@
 ---
 # General parameters #
-minio_is_install: 'false' # A boolean value, whether install the Minio.
+minio_is_install: false # A boolean value, whether install the Minio.
 minio_cluster: 'demo' # The Minio distributed cluster name, Must sets in hostvars.
 minio_path: '/data' # Specify the Minio data directory.
 minio_tenants: # Specify the name of tenants.
@@ -42,6 +42,10 @@ minio_ngx_client_max_body_size: '100m' # The maximum allowed size of the client 
 
 # System Variables #
 minio_arg:
+  cache: false
+  cache_expiry: '90'
+  cache_exclude: "*.pdf"
+  cache_quota: '20'
   compress_enabled: 'true'
   compress_extensions:
     - 'txt'

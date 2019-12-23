@@ -79,6 +79,10 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `minio_ngx_client_max_body_size`: The maximum allowed size of the client request body.
 
 ##### Server System Variables
+* `minio_arg.cache`: Whether enable disk caching feature.
+* `minio_arg.cache_expiry`: List of cache exclusion patterns.
+* `minio_arg.cache_exclude`: Cache expiry duration in days.
+* `minio_arg.cache_quota`: Maximum permitted usage of the cache in percentage.
 * `minio_arg.compress_enabled`: Allows streaming compression to ensure efficient disk space usage.
 * `minio_arg.compress_extensions`: Which extensions are included by default for compression.
 * `minio_arg.compress_mime_types`: Which mime-types are included by default for compression.
@@ -133,6 +137,10 @@ You can also use the group_vars or the host_vars files for setting the variables
     minio_ngx_version: 'extras'
     minio_ngx_client_max_body_size: '100m'
     minio_arg:
+      cache: false
+      cache_expiry: '90'
+      cache_exclude: "*.pdf"
+      cache_quota: '20'
       compress_enabled: 'true'
       compress_extensions:
         - 'txt'
