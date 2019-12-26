@@ -42,7 +42,7 @@ minio_ngx_client_max_body_size: '100m' # The maximum allowed size of the client 
 
 # System Variables #
 minio_arg:
-  cache: false
+  cache: false # Only for MinIO gateway.
   cache_expiry: '90'
   cache_exclude: "*.pdf"
   cache_quota: '20'
