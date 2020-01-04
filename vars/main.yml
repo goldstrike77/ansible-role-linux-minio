@@ -1,5 +1,6 @@
 ---
-minio_soft_url: 'http://cache.omygods.com'
+#minio_soft_url: 'http://cache.omygods.com'
+minio_soft_url: 'https://dl.min.io'
 
 architecture:
   amd64: 'amd64'
