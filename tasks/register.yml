@@ -1,7 +1,7 @@
 ---
 - name: Register exporter service with an http health check
   uri:
-    url: 'http://{{ consul_public_clients_item }}:{{ consul_public_http_port }}/v1/agent/service/register'
+    url: '{{ consul_public_http_prot }}://{{ consul_public_clients_item }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
     body: '{"tags":["prometheus","exporter"],"ID":"{{ inventory_hostname | upper }}_minio_exporter_t_{{ item | upper }}","name":"minio_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ minio_start_port | int + 1 + index }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}","tenant":"{{ item | upper }}"{% if tags is defined %},{{ tags | to_json | regex_replace("{") | regex_replace("}") }}{% endif %}},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ minio_start_port | int + 1 + index }}/minio/prometheus/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"10s"}]}'
     body_format: 'json'
@@ -10,6 +10,7 @@
       X-Consul-Token: '{{ consul_public_exporter_token }}'
       X-Requested-By: '{{ ansible_default_ipv4.address }}'
       cache-control: 'no-cache'
+    validate_certs: 'no'
   environment:
     no_proxy: '{{ consul_public_clients_item }}'
   loop: '{{ minio_tenants }}'
