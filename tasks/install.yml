@@ -1,4 +1,10 @@
 ---
+- name: Check current minio version
+  command: '/usr/local/bin/minio --version'
+  register: minio_current_version
+  changed_when: false
+  failed_when: false
+
 - name: Install minio server & client
   get_url:
     url: '{{ minio_soft_url }}/{{ item.state }}/{{ item.file }}/release/{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}/{{ item.file}}'
@@ -12,5 +18,6 @@
   with_items:
     - { state: 'client', file: 'mc' }
     - { state: 'server', file: 'minio' }
+  when: minio_current_version.rc == 2
   register: soft_update
   ignore_errors: true

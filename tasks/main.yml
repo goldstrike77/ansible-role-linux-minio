@@ -35,5 +35,7 @@
       when: consul_public_register | bool
     - name: Bucket operation
       include: 'bucket.yml'
-      when: minio_servers[0] in ansible_default_ipv4.address
+      when:
+        - minio_servers[0] in ansible_default_ipv4.address
+        - minio_tenants is defined
   when: minio_servers | length == 1 or minio_servers | length > 3
