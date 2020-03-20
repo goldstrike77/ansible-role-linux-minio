@@ -17,7 +17,7 @@
     state: 'present'
     validate_certs: 'no'
     disable_gpg_check: 'yes'
-    update_cache: 'yes'
+    update_cache: 'no'
   register: yum_status
   until: yum_status is succeeded
   retries: 3
