@@ -1,5 +1,4 @@
 ---
----
 - name: Check local consul client are accessible from current host
   uri:
     url: '{{ consul_public_http_prot }}://{{ ansible_default_ipv4.address }}:{{ consul_public_http_port }}/v1/agent/service/register'
