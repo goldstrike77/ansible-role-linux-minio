@@ -1,4 +1,43 @@
 ---
+---
+- name: Check local consul client are accessible from current host
+  uri:
+    url: '{{ consul_public_http_prot }}://{{ ansible_default_ipv4.address }}:{{ consul_public_http_port }}/v1/agent/service/register'
+    method: 'GET'
+    timeout: '5'
+    validate_certs: 'no'
+  environment:
+    no_proxy: '{{ ansible_default_ipv4.address }}'
+  changed_when: false
+  failed_when: false
+  register: check_consul_local
+
+- name: Register service with an http health check
+  uri:
+    url: '{{ consul_public_http_prot }}://{{ ansible_default_ipv4.address }}:{{ consul_public_http_port }}/v1/agent/service/register'
+    method: 'PUT'
+    body: '{"tags":["minio"],"ID":"{{ group_names[0] | upper | regex_replace("_", "-") }}-{{ environments | upper | regex_replace("_", "-") }}-{{ item | upper | regex_replace("_", "-") }}-minio","name":"{{ group_names[0] | upper | regex_replace("_", "-") }}-{{ environments | upper | regex_replace("_", "-") }}-{{ item | upper | regex_replace("_", "-") }}-minio","address":"{{ ansible_default_ipv4.address }}","port":{{ minio_start_port | int + 1 + index }},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ minio_start_port | int + 1 + index }}/minio/prometheus/metrics","interval":"10s","tls_skip_verify":true,"method":"HEAD","timeout":"10s"}]}'
+    body_format: 'json'
+    status_code: '200'
+    headers:
+      X-Consul-Token: '{{ consul_public_exporter_token }}'
+      X-Requested-By: '{{ ansible_default_ipv4.address }}'
+      cache-control: 'no-cache'
+    validate_certs: 'no'
+  environment:
+    no_proxy: '{{ ansible_default_ipv4.address }}'
+  loop: '{{ minio_tenants }}'
+  loop_control:
+    index_var: index
+  when: check_consul_local.status == 405
+  register: register_status
+  until: register_status.status == 200
+  retries: 3
+  delay: 3
+  no_log: true
+  changed_when: false
+  failed_when: false
+
 - name: Register exporter service with an http health check
   uri:
     url: '{{ consul_public_http_prot }}://{{ consul_public_clients_item }}:{{ consul_public_http_port }}/v1/agent/service/register'
