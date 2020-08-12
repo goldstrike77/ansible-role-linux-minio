@@ -27,11 +27,11 @@ __Table of Contents__
 - [Contributors](#Contributors)
 
 ## Overview
-This Ansible role installs  Minio on linux operating system, including establishing a filesystem structure and server configuration with some common operational features.
+MinIO is a cloud storage server compatible with Amazon S3. As an object store, MinIO can store unstructured data such as photos, videos, log files, backups and container images.
 
 ## Requirements
 ### Operating systems
-This role will work on the following operating systems:
+This Ansible role installs Minio on Linux operating system, including establishing a filesystem structure and server configuration with some common operational features, Will works on the following operating systems:
 
   * CentOS 7
 
@@ -65,7 +65,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `minio_ngx_pagespeed`: Enables or disables pagespeed modules.
 * `minio_ngx_port_http`: NGinx HTTP listen port.
 * `minio_ngx_port_https`: NGinx HTTPs listen port.
-* `minio_ngx_ssl_protocols`: intermediate or modern, defines SSL protocol profile.
+* `minio_ngx_ssl_protocols`: Defines SSL protocol profile. 
 * `minio_ngx_version`: extras or standard
 * `minio_ngx_client_max_body_size`: The maximum allowed size of the client request body.
 
@@ -86,20 +86,21 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 
 ##### Service Mesh
 * `environments`: Define the service environment.
+* `datacenter`: Define the DataCenter.
+* `domain`: Define the Domain.
 * `tags`: Define the service custom label.
 * `exporter_is_install`: Whether to install prometheus exporter.
-* `consul_public_register`: false Whether register a exporter service with public consul client.
+* `consul_public_register`: Whether register a exporter service with public consul client.
 * `consul_public_exporter_token`: Public Consul client ACL token.
 * `consul_public_http_prot`: The consul Hypertext Transfer Protocol.
 * `consul_public_clients`: List of public consul clients.
 * `consul_public_http_port`: The consul HTTP API port.
 
 ### Other parameters
-- Ansible versions >= 2.8
-- Python >= 2.7.5
 
 ## Dependencies
-- Ansible versions > 2.8 are supported.
+- Ansible versions >= 2.8
+- Python >= 2.7.5
 - [NGinx](https://github.com/goldstrike77/ansible-role-linux-nginx.git)
 
 ## Example
@@ -115,63 +116,69 @@ See tests/inventory for an example.
 ### Vars in role configuration
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: all
-      roles:
-         - role: ansible-role-linux-minio
-           minio_cluster: demo
+```yaml
+- hosts: all
+  roles:
+     - role: ansible-role-linux-minio
+       minio_cluster: demo
+```
 
 ### Combination of group vars and playbook
-You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`
+You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`.
 
-    minio_path: '/data'
-    minio_tenants: '2'
-    minio_ngx_dept: false
-    minio_start_port: '9000'
-    minio_ngx_site_path: '{{ minio_path }}/nginx_site'
-    minio_ngx_logs_path: '{{ minio_path }}/nginx_logs'
-    minio_ngx_block_agents: true
-    minio_ngx_block_string: true
-    minio_ngx_compress: true
-    minio_ngx_pagespeed: true
-    minio_ngx_port_http: '80'
-    minio_ngx_port_https: '443'
-    minio_ngx_ssl_protocols: 'modern'
-    minio_ngx_version: 'extras'
-    minio_ngx_client_max_body_size: '100m'
-    minio_arg:
-      cache: false
-      cache_expiry: '90'
-      cache_exclude: "*.pdf"
-      cache_quota: '20'
-      compress_enabled: 'true'
-      compress_extensions:
-        - 'txt'
-        - 'log'
-        - 'csv'
-        - 'json'
-      compress_mime_types:
-        - 'text/csv'
-        - 'text/plain'
-        - 'application/json'
-      drive_sync: 'on'
-      uid: '2021'
-      ulimit_nofile: '65535'
-      ulimit_nproc: '65535'
-      user: 'minio'
-      webui: 'on'
-    environments: 'Development'
-    tags:
-      subscription: 'default'
-      owner: 'nobody'
-      department: 'Infrastructure'
-      organization: 'The Company'
-      region: 'IDC01'
-    consul_public_register: false
-    consul_public_exporter_token: '00000000-0000-0000-0000-000000000000'
-    consul_public_http_prot: 'https'
-    consul_public_http_port: '8500'
-    consul_public_clients:
-      - '127.0.0.1'
+```yaml
+minio_path: '/data'
+minio_tenants: '2'
+minio_ngx_dept: false
+minio_start_port: '9000'
+minio_ngx_site_path: '{{ minio_path }}/nginx_site'
+minio_ngx_logs_path: '{{ minio_path }}/nginx_logs'
+minio_ngx_block_agents: true
+minio_ngx_block_string: true
+minio_ngx_compress: true
+minio_ngx_pagespeed: true
+minio_ngx_port_http: '80'
+minio_ngx_port_https: '443'
+minio_ngx_ssl_protocols: 'modern'
+minio_ngx_version: 'extras'
+minio_ngx_client_max_body_size: '100m'
+minio_arg:
+  cache: false
+  cache_expiry: '90'
+  cache_exclude: "*.pdf"
+  cache_quota: '20'
+  compress_enabled: 'true'
+  compress_extensions:
+    - 'txt'
+    - 'log'
+    - 'csv'
+    - 'json'
+  compress_mime_types:
+    - 'text/csv'
+    - 'text/plain'
+    - 'application/json'
+  drive_sync: 'on'
+  uid: '2021'
+  ulimit_nofile: '65535'
+  ulimit_nproc: '65535'
+  user: 'minio'
+  webui: 'on'
+environments: 'Development'
+datacenter: 'dc01'
+domain: 'local'
+tags:
+  subscription: 'default'
+  owner: 'nobody'
+  department: 'Infrastructure'
+  organization: 'The Company'
+  region: 'China'
+consul_public_register: false
+consul_public_exporter_token: '00000000-0000-0000-0000-000000000000'
+consul_public_http_prot: 'https'
+consul_public_http_port: '8500'
+consul_public_clients:
+  - '127.0.0.1'
+```
 
 ## License
 ![](https://img.shields.io/badge/MIT-purple.svg?style=for-the-badge)
