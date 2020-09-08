@@ -1,39 +1,41 @@
 ---
-- name: Erasure endpoints check
+- name: Erasure endpoints check.
   debug:
     msg: 'Invalid total number of endpoints for erasure mode, Please provide an even number of endpoints greater or equal to 4, For more information, please refer to https://docs.minio.io/docs/minio-erasure-code-quickstart-guide.'
   when:
     - minio_servers | length > 1
     - minio_servers | length < 4
 
-- name: Minio operation
+- name: Minio operation.
   block:
-    - name: Proxy traffic using NGinx
+    - name: Proxy traffic using NGinx.
       include: 'nginx.yml'
       when: minio_ngx_dept | bool
-    - name: Include tasks for specific OS
+    - name: Include tasks for specific OS.
       include: '{{ ansible_os_family }}.yml'
-    - name: Straight to getenforce selinux status
+    - name: Straight to getenforce selinux status.
       include: 'selinux.yml'
-    - name: Configure the minio firewall
+    - name: Configure the minio firewall.
       include: 'firewall.yml'
-    - name: Installation the minio
+    - name: Installation the minio.
       include: 'install.yml'
-    - name: Configuration the minio
+    - name: Configuration the minio.
       include: 'configureation.yml'
-    - name: Reload the minio service
+    - name: Include certificate tasks.
+      include: 'certificates.yml'
+    - name: Reload the minio service.
       shell: echo ''
       notify: 'Ensure minio service is enabled'
       when: soft_update is changed or soft_config is changed or soft_systemd is changed
-    - name: Force the handler to run immediately
+    - name: Force the handler to run immediately.
       meta: flush_handlers
-    - name: Include prometheus exporter tasks
+    - name: Include prometheus exporter tasks.
       include: 'register.yml'
       loop: '{{ consul_public_clients }}'
       loop_control:
         loop_var: consul_public_clients_item
       when: consul_public_register | bool
-    - name: Bucket operation
+    - name: Bucket operation.
       include: 'bucket.yml'
       when:
         - minio_servers[0] in ansible_default_ipv4.address

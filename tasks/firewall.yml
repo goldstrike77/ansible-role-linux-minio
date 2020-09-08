@@ -1,9 +1,9 @@
 ---
-- name: Gathering service facts
+- name: Gathering service facts.
   service_facts:
   register: services_state
 
-- name: Allow minio service port
+- name: Allow minio service port.
   firewalld:
     port: '{{ minio_start_port|int + item|int }}/tcp'
     zone: 'public'

@@ -1,0 +1,68 @@
+---
+- name: Install requirement python package.
+  pip:
+    name: '{{ minio_python_dependent_packages }}'
+    state: 'forcereinstall'
+    extra_args: '--default-timeout=120 --ignore-installed -i https://{{ minio_pypi_url }}/simple --trusted-host {{ minio_pypi_url }}'
+  register: elastic_python_status
+  until: elastic_python_status is succeeded
+  retries: 5
+  delay: 2
+
+- name: Check private key exists.
+  stat:
+    path: '{{ minio_cert_path }}/private.key'
+  register: check_cert_keys
+
+- name: Certificate Signing operation.
+  block:
+    - name: Creating Certificate folder.
+      file:
+        dest: '{{ minio_cert_path }}/CAs'
+        state: 'directory'
+        owner: '{{ minio_arg.user }}'
+        mode: '1750'
+    - name: Selfsigned CA file transfer.
+      copy:
+        src: 'ssl/{{ item }}'
+        dest: '{{ minio_cert_path }}/CAs/{{ item }}'
+        owner: '{{ minio_arg.user }}'
+        mode: '640'
+      loop:
+        - 'public.crt'
+        - 'ca-key.pem'
+    - name: Generate an OpenSSL private key.
+      openssl_privatekey:
+        path: '{{ minio_cert_path }}/private.key'
+        select_crypto_backend: 'cryptography'
+        size: '4096'
+        type: 'RSA'
+        owner: '{{ minio_arg.user }}'
+        mode: '0644'
+        state: 'present'
+    - name: Generate an OpenSSL Certificate Signing Request.
+      openssl_csr:
+        path: '{{ minio_cert_path }}/private.csr'
+        privatekey_path: '{{ minio_cert_path }}/private.key'
+        select_crypto_backend: 'cryptography'
+        common_name: 'Server'
+        subject_alt_name:
+          - 'DNS:{{ ansible_hostname }}'
+          - 'DNS:{{ ansible_fqdn }}'
+          - 'IP:{{ ansible_default_ipv4.address }}'
+        owner: '{{ minio_arg.user }}'
+        mode: '0644'
+        state: 'present'
+    - name: Generate an OpenSSL certificate signed with your own CA certificate.
+      openssl_certificate:
+        path: '{{ minio_cert_path }}/public.crt'
+        csr_path: '{{ minio_cert_path }}/private.csr'
+        ownca_path: '{{ minio_cert_path }}/CAs/public.crt'
+        ownca_privatekey_path: '{{ minio_cert_path }}/CAs/ca-key.pem'
+        select_crypto_backend: 'cryptography'
+        ownca_not_after: '+7305d'
+        provider: 'ownca'
+        owner: '{{ minio_arg.user }}'
+        mode: '0644'
+        state: 'present'
+  when: not check_cert_keys.stat.exists or check_cert_keys.stat.size == 0
