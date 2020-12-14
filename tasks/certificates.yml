@@ -49,6 +49,7 @@
         subject_alt_name:
           - 'DNS:{{ ansible_hostname }}'
           - 'DNS:{{ ansible_fqdn }}'
+          - 'DNS:*.service.{{ datacenter }}.{{ domain }}'
           - 'IP:{{ ansible_default_ipv4.address }}'
         owner: '{{ minio_arg.user }}'
         mode: '0644'
