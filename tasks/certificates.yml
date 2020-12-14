@@ -49,7 +49,6 @@
         subject_alt_name:
           - 'DNS:{{ ansible_hostname }}'
           - 'DNS:{{ ansible_fqdn }}'
-          - 'DNS:{{ group_names[0] | title | regex_replace("_", "-") }}-{{ group_names[-1] | title | regex_replace("_", "-") }}-{{ environments | upper | regex_replace("_", "-") }}-minio-{{ item | upper | regex_replace("_", "-") }}.{{ datacenter }}.{{ domain }}'
           - 'IP:{{ ansible_default_ipv4.address }}'
         owner: '{{ minio_arg.user }}'
         mode: '0644'
