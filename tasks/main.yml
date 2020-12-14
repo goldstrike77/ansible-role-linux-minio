@@ -3,8 +3,8 @@
   debug:
     msg: 'Invalid total number of endpoints for erasure mode, Please provide an even number of endpoints greater or equal to 4, For more information, please refer to https://docs.minio.io/docs/minio-erasure-code-quickstart-guide.'
   when:
-    - minio_servers | length > 1
-    - minio_servers | length < 4
+    - minio_servers | length * minio_drives > 1
+    - minio_servers | length * minio_drives < 4
 
 - name: Minio operation.
   block:
@@ -40,4 +40,4 @@
       when:
         - minio_servers[0] in ansible_default_ipv4.address
         - minio_tenants is defined
-  when: minio_servers | length == 1 or minio_servers | length > 3
+  when: minio_servers | length * minio_drives == 1 or minio_servers | length * minio_drives > 3

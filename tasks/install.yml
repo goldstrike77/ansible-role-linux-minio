@@ -15,7 +15,7 @@
     timeout: '60'
     force: 'yes'
     validate_certs: 'no'
-  with_items:
+  loop:
     - { state: 'client', file: 'mc' }
     - { state: 'server', file: 'minio' }
   when: minio_current_version.rc == 2

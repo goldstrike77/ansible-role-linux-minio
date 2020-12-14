@@ -3,6 +3,7 @@
 minio_is_install: false # A boolean value, whether install the Minio.
 minio_cluster: 'demo' # The Minio distributed cluster name, Must sets in hostvars.
 minio_path: '/data' # Specify the Minio data directory.
+minio_drives: 2 # Defines the number of drives per node.
 minio_tenants: # Specify the name of tenants.
   - 'other.example.com'
   - 'thanos.example.com'

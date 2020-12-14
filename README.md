@@ -48,6 +48,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ##### General parameters
 * `minio_cluster`: The Minio distributed cluster name, Must sets in hostvars.
 * `minio_path`: Specify the Minio data directory.
+* `minio_drives`: Defines the number of drives per node.
 * `minio_tenants`: Specify the name of tenants.
 
 ##### Role dependencies
@@ -128,7 +129,10 @@ You can also use the group_vars or the host_vars files for setting the variables
 
 ```yaml
 minio_path: '/data'
-minio_tenants: '2'
+minio_drives: 2
+minio_tenants:
+  - 'other.example.com'
+  - 'thanos.example.com'
 minio_ngx_dept: false
 minio_start_port: '9000'
 minio_ngx_site_path: '{{ minio_path }}/nginx_site'
