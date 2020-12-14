@@ -1,6 +1,6 @@
 MINIO_PROMETHEUS_AUTH_TYPE="public"
 {% if minio_servers | length > 1 %}
-MINIO_VOLUMES='{% for node in minio_servers %}{% for i in range(1,minio_drives+1,1) | list %}https://{{ node }}{{ minio_path }}/minio/T_{{ item }}_{{ i }} {% endfor %}{% endfor %}'
+MINIO_VOLUMES='{% for node in minio_servers %}{% for i in range(1,minio_drives+1,1) | list %}https://{{ node }}{{ minio_path }}/minio/T_{{ item }}_d{{ i }} {% endfor %}{% endfor %}'
 {% else %}
 MINIO_VOLUMES="{{ minio_path }}/minio/T_{{ item }}_{1...{{ minio_drives }}}"
 {% endif %}

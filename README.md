@@ -131,8 +131,8 @@ You can also use the group_vars or the host_vars files for setting the variables
 minio_path: '/data'
 minio_drives: 2
 minio_tenants:
-  - 'other.example.com'
-  - 'thanos.example.com'
+  - 'others'
+  - 'thanos'
 minio_ngx_dept: false
 minio_start_port: '9000'
 minio_ngx_site_path: '{{ minio_path }}/nginx_site'
