@@ -14,11 +14,9 @@
   include_role:
     name: ansible-role-linux-nginx
   vars:
-    ngx_version: '{{ minio_ngx_version }}'
     ngx_port_http: '{{ minio_ngx_port_http }}'
     ngx_port_https: '{{ minio_ngx_port_https }}'
     ngx_compress: '{{ minio_ngx_compress }}'
-    ngx_pagespeed: '{{ minio_ngx_pagespeed }}'
     ngx_block_agents: '{{ minio_ngx_block_agents }}'
     ngx_block_string: '{{ minio_ngx_block_string }}'
     ngx_ssl_protocols: '{{ minio_ngx_ssl_protocols }}'

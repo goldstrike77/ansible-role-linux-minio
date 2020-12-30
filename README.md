@@ -63,11 +63,9 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `minio_ngx_block_agents`: Enables or disables block unsafe User Agents.
 * `minio_ngx_block_string`: Enables or disables block includes Exploits / File injections / Spam / SQL injections.
 * `minio_ngx_compress`: Enables or disables compression.
-* `minio_ngx_pagespeed`: Enables or disables pagespeed modules.
 * `minio_ngx_port_http`: NGinx HTTP listen port.
 * `minio_ngx_port_https`: NGinx HTTPs listen port.
 * `minio_ngx_ssl_protocols`: Defines SSL protocol profile. 
-* `minio_ngx_version`: extras or standard
 * `minio_ngx_client_max_body_size`: The maximum allowed size of the client request body.
 
 ##### Server System Variables
@@ -141,11 +139,9 @@ minio_ngx_logs_path: '{{ minio_path }}/nginx_logs'
 minio_ngx_block_agents: true
 minio_ngx_block_string: true
 minio_ngx_compress: true
-minio_ngx_pagespeed: true
 minio_ngx_port_http: '80'
 minio_ngx_port_https: '443'
 minio_ngx_ssl_protocols: 'modern'
-minio_ngx_version: 'extras'
 minio_ngx_client_max_body_size: '100m'
 minio_arg:
   cache: false

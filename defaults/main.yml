@@ -20,11 +20,9 @@ minio_ngx_logs_path: '{{ minio_path }}/nginx/logs' # Specify the NGinx logs dire
 minio_ngx_block_agents: true # Enables or disables block unsafe User Agents.
 minio_ngx_block_string: true # Enables or disables block includes Exploits / File injections / Spam / SQL injections.
 minio_ngx_compress: true # Enables or disables compression.
-minio_ngx_pagespeed: true # Enables or disables pagespeed modules.
 minio_ngx_port_http: '80' # NGinx HTTP listen port.
 minio_ngx_port_https: '443' # NGinx HTTPs listen port.
 minio_ngx_ssl_protocols: 'modern' # intermediate or modern, defines SSL protocol profile.
-minio_ngx_version: 'standard' # extras or standard
 minio_ngx_client_max_body_size: '100m' # The maximum allowed size of the client request body.
 
 # System Variables #
