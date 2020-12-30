@@ -89,6 +89,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `environments`: Define the service environment.
 * `datacenter`: Define the DataCenter.
 * `domain`: Define the Domain.
+* `customer`: Define the customer name.
 * `tags`: Define the service custom label.
 * `exporter_is_install`: Whether to install prometheus exporter.
 * `consul_public_register`: Whether register a exporter service with public consul client.
@@ -129,7 +130,7 @@ You can also use the group_vars or the host_vars files for setting the variables
 
 ```yaml
 minio_path: '/data'
-minio_drives: 2
+minio_drives: 1
 minio_tenants:
   - 'others'
   - 'thanos'
@@ -167,9 +168,10 @@ minio_arg:
   ulimit_nproc: '65535'
   user: 'minio'
   webui: 'on'
-environments: 'Development'
+environments: 'prd'
 datacenter: 'dc01'
 domain: 'local'
+customer: 'demo'
 tags:
   subscription: 'default'
   owner: 'nobody'

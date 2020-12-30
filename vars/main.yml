@@ -29,7 +29,7 @@ minio_kernel_parameters:
 
 minio_servers: "\
   {% set _minio_servers = [] %}\
-  {% for host in groups[group_names[-1]] %}\
+  {% for host in groups[group_names[0]] %}\
     {% set _minio_cluster = minio_cluster | default('', true) %}\
     {% if ( _minio_cluster == minio_cluster) %}\
       {% if _minio_servers.append(hostvars[host]['ansible_host']) %}{% endif %}\

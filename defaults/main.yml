@@ -3,7 +3,7 @@
 minio_is_install: false # A boolean value, whether install the Minio.
 minio_cluster: 'demo' # The Minio distributed cluster name, Must sets in hostvars.
 minio_path: '/data' # Specify the Minio data directory.
-minio_drives: 2 # Defines the number of drives per node.
+minio_drives: 1 # Defines the number of drives per node.
 minio_tenants: # Specify the name of tenants.
   - 'others'
   - 'thanos'
@@ -51,9 +51,10 @@ minio_arg:
   webui: 'on' # Enable or Disable access to web UI
 
 # Service Mesh #
-environments: 'Development' # Define the service environment.
+environments: 'prd' # Define the service environment.
 datacenter: 'dc01' # Define the DataCenter.
 domain: 'local' # Define the Domain.
+customer: 'demo' # Define the customer name.
 #tags: # Define the service custom label.
 #  subscription: 'default'
 #  owner: 'nobody'
@@ -65,4 +66,4 @@ consul_public_exporter_token: '00000000-0000-0000-0000-000000000000' # Public Co
 consul_public_http_port: '8500' # The consul HTTP API port.
 consul_public_http_prot: 'https' # The consul Hypertext Transfer Protocol.
 consul_public_clients: # List of public consul clients.
-  - '127.0.0.1'
+  -	 '127.0.0.1'
