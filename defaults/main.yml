@@ -64,4 +64,4 @@ consul_public_exporter_token: '00000000-0000-0000-0000-000000000000' # Public Co
 consul_public_http_port: '8500' # The consul HTTP API port.
 consul_public_http_prot: 'https' # The consul Hypertext Transfer Protocol.
 consul_public_clients: # List of public consul clients.
-  -	 '127.0.0.1'
+  - '127.0.0.1'
