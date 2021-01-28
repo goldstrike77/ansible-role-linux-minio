@@ -2,7 +2,7 @@
 minio_pypi_url: 'pypi.tuna.tsinghua.edu.cn'
 
 minio_python_dependent_packages:
-  - 'pip'
+  - 'pip==20.3.4'
   - 'cryptography'
 
 minio_cert_path: '/etc/minio_certs'
