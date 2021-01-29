@@ -20,9 +20,20 @@ architecture:
   64-bit: 'amd64'
 
 minio_kernel_parameters:
+  - { variable: 'kernel.msgmax', value: '65536' }
+  - { variable: 'kernel.msgmnb', value: '65536' }
+  - { variable: 'kernel.pid_max', value: '65536' }  
   - { variable: 'kernel.sched_min_granularity_ns', value: '10000000' }
   - { variable: 'kernel.sched_wakeup_granularity_ns', value: '15000000' }
+  - { variable: 'net.core.netdev_max_backlog', value: '262144' }
+  - { variable: 'net.core.optmem_max', value: '25165824' }
+  - { variable: 'net.core.rmem_default', value: '2097152' }
   - { variable: 'net.core.rmem_max', value: '2097152' }
+  - { variable: 'net.core.somaxconn', value: '65535' }
+  - { variable: 'net.core.wmem_default', value: '2097152' }
+  - { variable: 'net.core.wmem_max', value: '2097152' }
+  - { variable: 'net.ipv4.tcp_rmem', value: '8192 87380 16777216' }
+  - { variable: 'net.ipv4.tcp_wmem', value: '8192 65536 16777216' }
   - { variable: 'vm.dirty_background_ratio', value: '1' }
   - { variable: 'vm.dirty_ratio', value: '5' }
   - { variable: 'vm.swappiness', value: '10' }
