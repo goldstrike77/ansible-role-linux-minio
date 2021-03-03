@@ -3,7 +3,7 @@
   pip:
     name: '{{ minio_python_dependent_packages }}'
     state: 'forcereinstall'
-    extra_args: '--default-timeout=120 --ignore-installed -i https://{{ minio_pypi_url }}/simple --trusted-host {{ minio_pypi_url }}'
+    extra_args: '--default-timeout=120 -i https://{{ minio_pypi_url }}/simple --trusted-host {{ minio_pypi_url }}'
   register: elastic_python_status
   until: elastic_python_status is succeeded
   retries: 5
