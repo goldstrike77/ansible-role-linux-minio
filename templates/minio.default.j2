@@ -2,7 +2,7 @@ MINIO_PROMETHEUS_AUTH_TYPE="public"
 {% if minio_servers | length > 1 %}
 MINIO_VOLUMES='{% for node in minio_servers %}{% for i in range(1,minio_drives+1,1) | list %}https://{{ node }}{{ minio_path }}/minio/T_{{ item }}_d{{ i }} {% endfor %}{% endfor %}'
 {% else %}
-MINIO_VOLUMES="{{ minio_path }}/minio/T_{{ item }}_{1...{{ minio_drives }}}"
+MINIO_VOLUMES='{{ minio_path }}/minio/T_{{ item }}_d1'
 {% endif %}
 MINIO_OPTS="--address {{ ansible_default_ipv4.address }}:{{ minio_start_port|int + index + 1 }}"
 MINIO_ACCESS_KEY="{{ lookup('password', '' + minio_cluster + item + ':accessKey length=20 chars=ascii_letters,digits')|upper }}"
@@ -25,7 +25,7 @@ MINIO_NOTIFY_ELASTICSEARCH_ENABLE="on"
 MINIO_NOTIFY_ELASTICSEARCH_URL="{{ minio_events_arg.url }}"
 MINIO_NOTIFY_ELASTICSEARCH_INDEX="{{ minio_events_arg.index }}"
 MINIO_NOTIFY_ELASTICSEARCH_FORMAT="{{ minio_events_arg.format }}"
-MINIO_NOTIFY_ELASTICSEARCH_QUEUE_DIR="{{ minio_path }}/minio/T_{{ item }}/events"
+MINIO_NOTIFY_ELASTICSEARCH_QUEUE_DIR="{{ minio_path }}/minio/T_{{ item }}_events"
 MINIO_NOTIFY_ELASTICSEARCH_QUEUE_LIMIT="{{ minio_events_arg.queue_limit }}"
 MINIO_NOTIFY_ELASTICSEARCH_USERNAME="{{ minio_events_arg.username }}"
 MINIO_NOTIFY_ELASTICSEARCH_PASSWORD="{{ minio_events_arg.password }}"

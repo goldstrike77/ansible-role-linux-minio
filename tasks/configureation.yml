@@ -15,7 +15,7 @@
 
 - name: Creating Minio events storage path.
   file:
-    dest: '{{ minio_path }}/minio/T_{{ item }}/events'
+    dest: '{{ minio_path }}/minio/T_{{ item }}_events'
     state: 'directory'
     owner: '{{ minio_arg.user }}'
     group: '{{ minio_arg.user }}'

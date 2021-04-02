@@ -52,8 +52,8 @@ minio_arg:
 #minio_events_arg: # Define the targets for bucket events can be published to.
 #  type: 'elasticsearch' 
 #  url: 'https://demo-prd-infra-monitor-elasticsearch.service.dc01.local:9200'
-#  index: 'minio-%{+yyyy.MM.dd}'
-#  format: 'namespace'
+#  index: 'minio-event'
+#  format: 'access'
 #  queue_limit: '100000'
 #  username: 'elastic'
 #  password: 'changeme'
