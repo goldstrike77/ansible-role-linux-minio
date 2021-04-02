@@ -1,8 +1,8 @@
 ---
-- name: Include OS-specific variables
+- name: Include OS-specific variables.
   include_vars: '{{ ansible_os_family }}.yml'
 
-- name: Add EPEL YUM repositories
+- name: Add EPEL YUM repositories.
   yum_repository:
     name: '{{ epel_repo_name }}'
     description: '{{ epel_repo_name }} YUM repo'
@@ -11,7 +11,7 @@
     gpgcheck: 'no'
     timeout: '60'
 
-- name: Install the dependents packages
+- name: Install the dependents packages.
   yum:
     name: '{{ minio_dependent_packages }}'
     state: 'present'
@@ -20,5 +20,5 @@
     update_cache: 'no'
   register: yum_status
   until: yum_status is succeeded
-  retries: 3
-  delay: 5
+  retries: 5
+  delay: 2

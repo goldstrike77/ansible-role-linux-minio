@@ -19,5 +19,5 @@
     - { state: 'client', file: 'mc' }
     - { state: 'server', file: 'minio' }
   when: minio_current_version.rc == 2
-  register: soft_update
+  notify: Enable Minio service.
   ignore_errors: true

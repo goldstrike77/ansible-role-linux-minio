@@ -32,7 +32,7 @@
   register: register_status
   until: register_status.status == 200
   retries: 3
-  delay: 3
+  delay: 2
   no_log: true
   changed_when: false
   failed_when: false
@@ -58,7 +58,7 @@
   register: register_status
   until: register_status.status == 200
   retries: 3
-  delay: 3
+  delay: 2
   no_log: true
   changed_when: false
   failed_when: false

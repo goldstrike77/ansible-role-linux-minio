@@ -1,10 +1,10 @@
 ---
-- name: Add the group minio
+- name: Add the group minio.
   group:
     name: '{{ minio_arg.user }}'
     gid: '{{ minio_arg.uid }}'
 
-- name: Add the user minio
+- name: Add the user minio.
   user:
     name: '{{ minio_arg.user }}'
     comment: '{{ minio_arg.user }}'
@@ -13,7 +13,16 @@
     uid: '{{ minio_arg.uid }}'
     group: '{{ minio_arg.user }}'
 
-- name: Creating Minio tenants drives
+- name: Creating Minio events storage path.
+  file:
+    dest: '{{ minio_path }}/minio/T_{{ item }}/events'
+    state: 'directory'
+    owner: '{{ minio_arg.user }}'
+    group: '{{ minio_arg.user }}'
+    mode: '0750'
+  loop: '{{ minio_tenants }}'
+
+- name: Creating Minio tenants drives.
   file:
     dest: '{{ minio_path }}/minio/T_{{ item.0 }}_d{{ item.1 }}'
     state: 'directory'
@@ -22,7 +31,7 @@
     mode: '0750'
   loop: '{{ minio_tenants|product(range(1,minio_drives+1,1)|list)|list }}'
 
-- name: Creating Minio tenants cache drives
+- name: Creating Minio tenants cache drives.
   file:
     dest: '{{ minio_path }}/cache/minio/T_{{ item.0 }}_d{{ item.1 }}'
     state: 'directory'
@@ -32,7 +41,7 @@
   loop: '{{ minio_tenants|product(range(1,minio_drives+1,1)|list)|list }}'
   when: minio_arg.cache | bool
 
-- name: Configure kernel parameters
+- name: Configure kernel parameters.
   sysctl:
     name: '{{ item.variable }}'
     value: '{{ item.value }}'
@@ -42,7 +51,7 @@
     sysctl_file: '/etc/sysctl.d/20-sysctl.conf'
   loop: '{{ minio_kernel_parameters|flatten(levels=1) }}'
 
-- name: Minio configure file transfer
+- name: Minio configure file transfer.
   template:
     src: 'minio.default.j2'
     dest: '/etc/default/minio-T_{{ item }}'
@@ -53,9 +62,9 @@
   loop_control:
     index_var: index
   no_log: true
-  register: soft_config
+  notify: Enable Minio service.
 
-- name: Minio systemd service file transfer
+- name: Minio systemd service file transfer.
   template:
     src: 'minio.service.j2'
     dest: '/lib/systemd/system/minio-T_{{ item }}.service'
@@ -63,4 +72,4 @@
     group: 'root'
     mode: '0644'
   loop: '{{ minio_tenants }}'
-  register: soft_systemd
+  notify: Enable Minio service.

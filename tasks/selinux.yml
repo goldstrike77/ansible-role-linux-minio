@@ -28,5 +28,4 @@
     setype: 'http_port_t'
     state: 'present'
   with_sequence: start=1 end={{ minio_tenants | length | int }}
-  when:
-    - minio_selinux | bool
+  when: minio_selinux | bool

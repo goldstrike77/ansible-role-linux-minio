@@ -41,12 +41,20 @@ minio_arg:
     - 'text/csv'
     - 'text/plain'
     - 'application/json'
-  drive_sync: 'on' # Enable synchronous mode for all data operations
+  drive_sync: 'on' # Enable synchronous mode for all data operations.
   uid: '2021'
   ulimit_nofile: '65535'
   ulimit_nproc: '65535'
   user: 'minio'
-  webui: 'on' # Enable or Disable access to web UI
+  webui: 'on' # Enable or Disable access to web UI.
+#  notification: # Define the targets for bucket events can be published to.
+#    type: 'elasticsearch' 
+#    url: 'demo-prd-infra-monitor-elasticsearch.service.dc01.local'
+#    index: 'minio-%{+yyyy.MM.dd}'
+#    format: 'namespace'
+#    queue_limit: '100000'
+#    username: 'elastic'
+#    password: 'changeme'
 
 # Service Mesh #
 environments: 'prd' # Define the service environment.

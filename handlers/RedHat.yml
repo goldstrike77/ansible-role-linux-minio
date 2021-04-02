@@ -1,5 +1,5 @@
 ---
-- name: Enable Minio service
+- name: Enable Minio service.
   systemd:
     name: 'minio-T_{{ item }}.service'
     enabled: 'yes'
@@ -8,4 +8,3 @@
   async: 1
   poll: 0
   with_items: '{{ minio_tenants }}'
-  listen: Ensure minio service is enabled

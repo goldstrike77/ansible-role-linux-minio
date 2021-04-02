@@ -23,10 +23,6 @@
       include: 'configureation.yml'
     - name: Include certificate tasks.
       include: 'certificates.yml'
-    - name: Reload the minio service.
-      shell: echo ''
-      notify: 'Ensure minio service is enabled'
-      when: soft_update is changed or soft_config is changed or soft_systemd is changed
     - name: Force the handler to run immediately.
       meta: flush_handlers
     - name: Include prometheus exporter tasks.
