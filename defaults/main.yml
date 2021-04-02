@@ -49,7 +49,7 @@ minio_arg:
   webui: 'on' # Enable or Disable access to web UI.
 
 # Bucket Notification Variables #
-#minio_noti_arg: # Define the targets for bucket events can be published to.
+#minio_events_arg: # Define the targets for bucket events can be published to.
 #  type: 'elasticsearch' 
 #  url: 'demo-prd-infra-monitor-elasticsearch.service.dc01.local'
 #  index: 'minio-%{+yyyy.MM.dd}'
