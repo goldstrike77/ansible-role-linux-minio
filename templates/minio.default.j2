@@ -20,13 +20,13 @@ MINIO_CACHE_EXCLUDE="{{ minio_arg.cache_exclude }}"
 MINIO_CACHE_QUOTA={{ minio_arg.cache_quota }}
 {% endif %}
 
-{% if minio_arg.notification is defined and minio_arg.notification.type == "elasticsearch" %}
+{% if minio_noti_arg is defined and minio_noti_arg.type == "elasticsearch" %}
 MINIO_NOTIFY_ELASTICSEARCH_ENABLE="on"
-MINIO_NOTIFY_ELASTICSEARCH_URL="{{ minio_arg.notification.url }}"
-MINIO_NOTIFY_ELASTICSEARCH_INDEX="{{ minio_arg.notification.index }}"
-MINIO_NOTIFY_ELASTICSEARCH_FORMAT="{{ minio_arg.notification.format }}"
+MINIO_NOTIFY_ELASTICSEARCH_URL="{{ minio_noti_arg.notification.url }}"
+MINIO_NOTIFY_ELASTICSEARCH_INDEX="{{ minio_noti_arg.notification.index }}"
+MINIO_NOTIFY_ELASTICSEARCH_FORMAT="{{ minio_noti_arg.notification.format }}"
 MINIO_NOTIFY_ELASTICSEARCH_QUEUE_DIR="{{ minio_path }}/minio/T_{{ item }}/events"
-MINIO_NOTIFY_ELASTICSEARCH_QUEUE_LIMIT="{{ minio_arg.notification.queue_limit }}"
-MINIO_NOTIFY_ELASTICSEARCH_USERNAME="{{ minio_arg.notification.username }}"
-MINIO_NOTIFY_ELASTICSEARCH_PASSWORD="{{ minio_arg.notification.password }}"
+MINIO_NOTIFY_ELASTICSEARCH_QUEUE_LIMIT="{{ minio_noti_arg.notification.queue_limit }}"
+MINIO_NOTIFY_ELASTICSEARCH_USERNAME="{{ minio_noti_arg.notification.username }}"
+MINIO_NOTIFY_ELASTICSEARCH_PASSWORD="{{ minio_noti_arg.notification.password }}"
 {% endif %}
