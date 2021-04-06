@@ -16,12 +16,12 @@
   vars:
     ngx_port_http: '{{ minio_ngx_port_http }}'
     ngx_port_https: '{{ minio_ngx_port_https }}'
-    ngx_compress: '{{ minio_ngx_compress }}'
-    ngx_block_agents: '{{ minio_ngx_block_agents }}'
-    ngx_block_string: '{{ minio_ngx_block_string }}'
-    ngx_ssl_protocols: '{{ minio_ngx_ssl_protocols }}'
-    ngx_site_path: '{{ minio_ngx_site_path }}'
-    ngx_logs_path: '{{ minio_ngx_logs_path }}'
+    ngx_compress: false
+    ngx_block_agents: true
+    ngx_block_string: true
+    ngx_ssl_protocols: 'modern'
+    ngx_site_path: '{{ minio_path }}/nginx/site'
+    ngx_logs_path: '{{ minio_path }}/nginx/logs'
     ngx_allow_methods:
       - 'POST'
       - 'PUT'

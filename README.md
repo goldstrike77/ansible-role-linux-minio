@@ -58,15 +58,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `minio_start_port`: The start port of Minio instance.
 
 ##### NGinx parameters
-* `minio_ngx_site_path`: Specify the NGinx site directory.
-* `minio_ngx_logs_path`:  Specify the NGinx logs directory.
-* `minio_ngx_block_agents`: Enables or disables block unsafe User Agents.
-* `minio_ngx_block_string`: Enables or disables block includes Exploits / File injections / Spam / SQL injections.
-* `minio_ngx_compress`: Enables or disables compression.
 * `minio_ngx_port_http`: NGinx HTTP listen port.
 * `minio_ngx_port_https`: NGinx HTTPs listen port.
-* `minio_ngx_ssl_protocols`: Defines SSL protocol profile. 
-* `minio_ngx_client_max_body_size`: The maximum allowed size of the client request body.
 
 ##### Server System Variables
 * `minio_arg.cache`: Whether enable disk caching feature.
@@ -82,6 +75,9 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `minio_arg.ulimit_nproc`: The number of processes launched by systemd.
 * `minio_arg.user`:  System user name for running minio services.
 * `minio_arg.webui`: Enable or Disable access to web UI.
+
+##### Bucket Notification Variables
+* `minio_events_arg`: Define the targets for bucket events can be published to.
 
 ##### Service Mesh
 * `environments`: Define the service environment.
@@ -134,14 +130,8 @@ minio_tenants:
   - 'thanos'
 minio_ngx_dept: false
 minio_start_port: '9000'
-minio_ngx_site_path: '{{ minio_path }}/nginx_site'
-minio_ngx_logs_path: '{{ minio_path }}/nginx_logs'
-minio_ngx_block_agents: true
-minio_ngx_block_string: true
-minio_ngx_compress: true
 minio_ngx_port_http: '80'
 minio_ngx_port_https: '443'
-minio_ngx_ssl_protocols: 'modern'
 minio_ngx_client_max_body_size: '100m'
 minio_arg:
   cache: false
@@ -164,6 +154,14 @@ minio_arg:
   ulimit_nproc: '65535'
   user: 'minio'
   webui: 'on'
+minio_events_arg:
+  type: 'elasticsearch' 
+  url: 'https://demo-prd-infra-monitor-elasticsearch.service.dc01.local:9200'
+  index: 'minio-event'
+  format: 'access'
+  queue_limit: '100000'
+  username: 'elastic'
+  password: 'changeme'
 environments: 'prd'
 datacenter: 'dc01'
 domain: 'local'
