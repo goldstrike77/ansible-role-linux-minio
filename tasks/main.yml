@@ -28,6 +28,7 @@
       include: 'configureation.yml'
     - name: Include certificate tasks.
       include: 'certificates.yml'
+      when: minio_force_https | bool
     - name: Force the handler to run immediately.
       meta: flush_handlers
     - name: Include prometheus exporter tasks.

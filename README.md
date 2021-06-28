@@ -23,7 +23,6 @@ __Table of Contents__
   * [Combination of group vars and playbook](#combination-of-group-vars-and-playbook)
 - [License](#license)
 - [Author Information](#author-information)
-- [Contributors](#Contributors)
 - [Donations](#Donations)
 
 ## Overview
@@ -48,6 +47,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ##### General parameters
 * `minio_cluster`: The Minio distributed cluster name, Must sets in hostvars.
 * `minio_path`: Specify the Minio data directory.
+* `minio_force_https`: A boolean to determine whether or not to Encrypting HTTP client communications.
 * `minio_drives`: Defines the number of drives per node.
 * `minio_tenants`: Specify the name of tenants.
 
@@ -60,6 +60,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ##### NGinx parameters
 * `minio_ngx_port_http`: NGinx HTTP listen port.
 * `minio_ngx_port_https`: NGinx HTTPs listen port.
+* `minio_ngx_client_max_body_size`: The maximum allowed size of the client request body.
 
 ##### Server System Variables
 * `minio_arg.cache`: Whether enable disk caching feature.
@@ -124,6 +125,7 @@ You can also use the group_vars or the host_vars files for setting the variables
 
 ```yaml
 minio_path: '/data'
+minio_force_https: true
 minio_drives: 1
 minio_tenants:
   - 'others'
@@ -185,9 +187,6 @@ consul_public_clients:
 
 ## Author Information
 Please send your suggestions to make this role better.
-
-## Contributors
-Special thanks to the [Connext Information Technology](http://www.connext.com.cn) for their contributions to this role.
 
 ## Donations
 Please donate to the following monero address.
