@@ -3,6 +3,8 @@ minio_pypi_url: 'pypi.tuna.tsinghua.edu.cn'
 
 minio_python_dependent_packages:
   - 'pip==20.3.4'
+  - 'cffi==1.14.6'
+  - 'idna==2.10'
   - 'cryptography==2.4.2'
   - 'paramiko==2.4.3'
   - 'pyopenssl==19.0.0'
@@ -42,7 +44,7 @@ minio_kernel_parameters:
 
 minio_servers: "\
   {% set _minio_servers = [] %}\
-  {% for host in groups[group_names[0]] %}\
+  {% for host in groups[group_names[-1]] %}\
     {% set _minio_cluster = minio_cluster | default('', true) %}\
     {% if ( _minio_cluster == minio_cluster) %}\
       {% if _minio_servers.append(hostvars[host]['ansible_host']) %}{% endif %}\

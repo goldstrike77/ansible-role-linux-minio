@@ -13,7 +13,8 @@ minio_tenants: # Specify the name of tenants.
 minio_ngx_dept: false # A boolean value, whether proxy web interface and API traffic using NGinx.
 
 # Listen port #
-minio_start_port: '9000'
+minio_api_start_port: '9000'
+minio_console_start_port: '9010'
 
 # NGinx parameters #
 minio_ngx_port_http: '80' # NGinx HTTP listen port.

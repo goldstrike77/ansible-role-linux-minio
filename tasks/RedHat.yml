@@ -9,6 +9,7 @@
     file: '{{ epel_repo_name }}'
     baseurl: '{{ epel_repo_url }}'
     gpgcheck: 'no'
+    sslverify: 'no'
     timeout: '60'
 
 - name: Install the dependents packages.

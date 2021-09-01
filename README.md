@@ -55,7 +55,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `minio_ngx_dept`: A boolean value, whether proxy web interface and API traffic using NGinx.
 
 ##### Listen port
-* `minio_start_port`: The start port of Minio instance.
+* `minio_api_start_port`: The start port of Minio instance API.
+* `minio_console_start_port`: The start port of Minio instance Console.
 
 ##### NGinx parameters
 * `minio_ngx_port_http`: NGinx HTTP listen port.
@@ -131,7 +132,8 @@ minio_tenants:
   - 'others'
   - 'thanos'
 minio_ngx_dept: false
-minio_start_port: '9000'
+minio_api_start_port: '9000'
+minio_console_start_port: '9010'
 minio_ngx_port_http: '80'
 minio_ngx_port_https: '443'
 minio_ngx_client_max_body_size: '100m'

@@ -3,9 +3,21 @@
   service_facts:
   register: services_state
 
-- name: Allow minio service port.
+- name: Allow minio API port.
   firewalld:
-    port: '{{ minio_start_port|int + item|int }}/tcp'
+    port: '{{ minio_api_start_port|int + item|int }}/tcp'
+    zone: 'public'
+    permanent: 'true'
+    immediate: 'true'
+    state: 'enabled'
+  with_sequence: start=1 end={{ minio_tenants | length | int }}
+  when:
+    - services_state.ansible_facts.services["firewalld.service"] is defined
+    - services_state.ansible_facts.services["firewalld.service"].state == 'running'
+
+- name: Allow minio Console port.
+  firewalld:
+    port: '{{ minio_console_start_port|int + item|int }}/tcp'
     zone: 'public'
     permanent: 'true'
     immediate: 'true'

@@ -4,7 +4,7 @@ MINIO_VOLUMES='{% for node in minio_servers %}{% for i in range(1,minio_drives+1
 {% else %}
 MINIO_VOLUMES='{{ minio_path }}/minio/T_{{ item }}_d1'
 {% endif %}
-MINIO_OPTS="--address {{ ansible_default_ipv4.address }}:{{ minio_start_port|int + index + 1 }}"
+MINIO_OPTS="--address {{ ansible_default_ipv4.address }}:{{ minio_api_start_port|int + index + 1 }} --console-address {{ ansible_default_ipv4.address }}:{{ minio_console_start_port|int + index + 1 }}"
 MINIO_ACCESS_KEY="{{ lookup('password', '' + minio_cluster + item + ':accessKey length=20 chars=ascii_letters,digits')|upper }}"
 MINIO_SECRET_KEY="{{ lookup('password', '' + minio_cluster + item + ':secretKey length=40 chars=ascii_letters,digits') }}"
 MINIO_BROWSER={{ minio_arg.webui }}

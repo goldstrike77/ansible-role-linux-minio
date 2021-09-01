@@ -23,7 +23,7 @@
 
 - name: Allow Minio to listen on service port
   seport:
-    ports: '{{ minio_start_port | int + item | int }}'
+    ports: '{{ minio_api_start_port | int + item | int }}'
     proto: 'tcp'
     setype: 'http_port_t'
     state: 'present'
