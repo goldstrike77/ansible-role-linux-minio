@@ -26,7 +26,7 @@ architecture:
 minio_kernel_parameters:
   - { variable: 'kernel.msgmax', value: '65536' }
   - { variable: 'kernel.msgmnb', value: '65536' }
-  - { variable: 'kernel.pid_max', value: '65536' }  
+  - { variable: 'kernel.pid_max', value: '4194303' }  
   - { variable: 'kernel.sched_min_granularity_ns', value: '10000000' }
   - { variable: 'kernel.sched_wakeup_granularity_ns', value: '15000000' }
   - { variable: 'net.core.netdev_max_backlog', value: '262144' }
