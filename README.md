@@ -45,7 +45,7 @@ The following list of supported the Minio releases:
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
 
 ##### General parameters
-* `minio_cluster`: The Minio distributed cluster name, Must sets in hostvars.
+* `minio_cluster`: The Minio distributed cluster name.
 * `minio_path`: Specify the Minio data directory.
 * `minio_force_https`: A boolean to determine whether or not to Encrypting HTTP client communications.
 * `minio_drives`: Defines the number of drives per node.

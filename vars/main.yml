@@ -11,8 +11,7 @@ minio_python_dependent_packages:
 
 minio_cert_path: '/etc/minio_certs'
 
-minio_soft_url: 'http://dl.minio.org.cn'
-#minio_soft_url: 'https://dl.min.io'
+minio_soft_url: 'https://dl.min.io'
 
 architecture:
   amd64: 'amd64'

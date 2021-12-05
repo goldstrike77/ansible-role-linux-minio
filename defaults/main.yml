@@ -1,7 +1,7 @@
 ---
 # General parameters #
 minio_is_install: false # A boolean to determine whether or not to install the MinIO.
-minio_cluster: 'demo' # The Minio distributed cluster name, Must sets in hostvars.
+minio_cluster: 'demo' # The Minio distributed cluster name.
 minio_path: '/data' # Specify the Minio data directory.
 minio_force_https: true # A boolean to determine whether or not to Encrypting HTTP client communications.
 minio_drives: 1 # Defines the number of drives per node.
