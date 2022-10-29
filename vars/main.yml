@@ -1,5 +1,5 @@
 ---
-minio_pypi_url: 'pypi.tuna.tsinghua.edu.cn'
+minio_pypi_url: 'mirrors.aliyun.com'
 
 minio_python_dependent_packages:
   - 'pip==20.3.4'
