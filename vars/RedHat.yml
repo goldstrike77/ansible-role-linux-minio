@@ -1,5 +1,5 @@
 epel_repo_name: 'epel'
-epel_repo_url: 'http://mirrors.tuna.tsinghua.edu.cn/epel/$releasever/$basearch/'
+epel_repo_url: 'http://mirrors.aliyun.com/epel/$releasever{% if ansible_distribution_major_version | int > 7 %}/Everything{% endif %}/$basearch/'
 
 minio_dependent_packages:
   - 'libselinux-utils'
