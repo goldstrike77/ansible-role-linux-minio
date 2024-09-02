@@ -1,28 +1,30 @@
 [Unit]
-Description=Minio
-Documentation=https://docs.minio.io
+Description=MinIO
+Documentation=https://docs.min.io
 Wants=network-online.target
 After=network-online.target
 AssertFileIsExecutable=/usr/local/bin/minio
 
 [Service]
-WorkingDirectory=/usr/local/
-User={{ minio_arg.user }}
-Group={{ minio_arg.user }}
-PermissionsStartOnly=true
-EnvironmentFile=-/etc/default/minio-T_{{ item }}
-ExecStartPre=/bin/bash -c "[ -n \"${MINIO_VOLUMES}\" ] || echo \"Variable MINIO_VOLUMES not set\""
-ExecStart=/usr/local/bin/minio --certs-dir {{ minio_cert_path }} server $MINIO_OPTS $MINIO_VOLUMES
-Restart=on-failure
-RestartSec=30s
-StandardOutput=journal
-StandardError=inherit
-LimitNOFILE={{ minio_arg.ulimit_nofile}}
-LimitNPROC={{ minio_arg.ulimit_nproc }}
-TimeoutStopSec=0
-KillSignal=SIGTERM
+Type=notify
+WorkingDirectory=/usr/local
+User=minio-user
+Group=minio-user
+ProtectProc=invisible
+EnvironmentFile=-/etc/default/minio
+ExecStart=/usr/local/bin/minio{% if minio_force_https | bool %} --certs-dir {{ minio_cert_path }}{% endif %} server $MINIO_OPTS $MINIO_VOLUMES
+# Let systemd restart this service always
+Restart=always
+# Specifies the maximum file descriptor number that can be opened by this process
+LimitNOFILE=1048576
+# Turn-off memory accounting by systemd, which is buggy.
+MemoryAccounting=no
+# Specifies the maximum number of threads this process can create
+TasksMax=infinity
+# Disable timeout logic and wait until process is stopped
+TimeoutSec=infinity
 SendSIGKILL=no
-SuccessExitStatus=0
 
 [Install]
 WantedBy=multi-user.target
+# Built for ${project.name}-${project.version} (${project.name})

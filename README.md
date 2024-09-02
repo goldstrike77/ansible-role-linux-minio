@@ -32,7 +32,7 @@ MinIO is a cloud storage server compatible with Amazon S3. As an object store, M
 ### Operating systems
 This Ansible role installs Minio on Linux operating system, including establishing a filesystem structure and server configuration with some common operational features, Will works on the following operating systems:
 
-  * CentOS 7
+  * CentOS 8
 
 ### Minio versions
 
@@ -45,18 +45,15 @@ The following list of supported the Minio releases:
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
 
 ##### General parameters
-* `minio_cluster`: The Minio distributed cluster name.
 * `minio_path`: Specify the Minio data directory.
 * `minio_force_https`: A boolean to determine whether or not to Encrypting HTTP client communications.
-* `minio_drives`: Defines the number of drives per node.
-* `minio_tenants`: Specify the name of tenants.
 
 ##### Role dependencies
 * `minio_ngx_dept`: A boolean value, whether proxy web interface and API traffic using NGinx.
 
 ##### Listen port
-* `minio_api_start_port`: The start port of Minio instance API.
-* `minio_console_start_port`: The start port of Minio instance Console.
+* `minio_api_port`: The start port of Minio instance API.
+* `minio_console_port`: The start port of Minio instance Console.
 
 ##### NGinx parameters
 * `minio_ngx_port_http`: NGinx HTTP listen port.
@@ -75,7 +72,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `minio_arg.uid`: System user ID for running minio services.
 * `minio_arg.ulimit_nofile`: The number of files launched by systemd.
 * `minio_arg.ulimit_nproc`: The number of processes launched by systemd.
-* `minio_arg.user`:  System user name for running minio services.
 * `minio_arg.webui`: Enable or Disable access to web UI.
 
 ##### Bucket Notification Variables
@@ -106,10 +102,10 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ### Hosts inventory file
 See tests/inventory for an example.
 
-    node01 ansible_host='192.168.1.10' minio_cluster='demo'
-    node02 ansible_host='192.168.1.11' minio_cluster='demo'
-    node03 ansible_host='192.168.1.12' minio_cluster='demo'
-    node04 ansible_host='192.168.1.13' minio_cluster='demo'
+    node01 ansible_host='192.168.1.10'
+    node02 ansible_host='192.168.1.11'
+    node03 ansible_host='192.168.1.12'
+    node04 ansible_host='192.168.1.13'
 
 ### Vars in role configuration
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
@@ -118,7 +114,6 @@ Including an example of how to use your role (for instance, with variables passe
 - hosts: all
   roles:
      - role: ansible-role-linux-minio
-       minio_cluster: demo
 ```
 
 ### Combination of group vars and playbook
@@ -127,16 +122,12 @@ You can also use the group_vars or the host_vars files for setting the variables
 ```yaml
 minio_path: '/data'
 minio_force_https: true
-minio_drives: 1
-minio_tenants:
-  - 'others'
-  - 'thanos'
 minio_ngx_dept: false
-minio_api_start_port: '9000'
-minio_console_start_port: '9010'
+minio_api_port: '9000'
+minio_console_port: '9001'
 minio_ngx_port_http: '80'
 minio_ngx_port_https: '443'
-minio_ngx_client_max_body_size: '100m'
+minio_ngx_client_max_body_size: '20480m'
 minio_arg:
   cache: false
   cache_expiry: '90'

@@ -1,52 +1,28 @@
 ---
-minio_pypi_url: 'mirrors.aliyun.com'
-
-minio_python_dependent_packages:
-  - 'pip==20.3.4'
-  - 'cffi==1.14.6'
-  - 'idna==2.10'
-  - 'cryptography==2.4.2'
-  - 'paramiko==2.4.3'
-  - 'pyopenssl==19.0.0'
-
-minio_cert_path: '/etc/minio_certs'
-
-minio_soft_url: 'https://dl.min.io'
-
-architecture:
-  amd64: 'amd64'
-  x86_64: 'amd64'
-  armv6l: 'arm'
-  armv7l: 'arm'
-  aarch64: 'arm64'
-  32-bit: '386'
-  64-bit: 'amd64'
+minio_cert_path: "/etc/minio_certs"
 
 minio_kernel_parameters:
-  - { variable: 'kernel.msgmax', value: '65536' }
-  - { variable: 'kernel.msgmnb', value: '65536' }
-  - { variable: 'kernel.pid_max', value: '4194303' }  
-  - { variable: 'kernel.sched_min_granularity_ns', value: '10000000' }
-  - { variable: 'kernel.sched_wakeup_granularity_ns', value: '15000000' }
-  - { variable: 'net.core.netdev_max_backlog', value: '262144' }
-  - { variable: 'net.core.optmem_max', value: '25165824' }
-  - { variable: 'net.core.rmem_default', value: '2097152' }
-  - { variable: 'net.core.rmem_max', value: '2097152' }
-  - { variable: 'net.core.somaxconn', value: '65535' }
-  - { variable: 'net.core.wmem_default', value: '2097152' }
-  - { variable: 'net.core.wmem_max', value: '2097152' }
-  - { variable: 'net.ipv4.tcp_rmem', value: '8192 87380 16777216' }
-  - { variable: 'net.ipv4.tcp_wmem', value: '8192 65536 16777216' }
-  - { variable: 'vm.dirty_background_ratio', value: '1' }
-  - { variable: 'vm.dirty_ratio', value: '5' }
-  - { variable: 'vm.swappiness', value: '10' }
+  - { variable: "kernel.msgmax", value: "65536" }
+  - { variable: "kernel.msgmnb", value: "65536" }
+  - { variable: "kernel.pid_max", value: "4194303" }
+  - { variable: "kernel.sched_min_granularity_ns", value: "10000000" }
+  - { variable: "kernel.sched_wakeup_granularity_ns", value: "15000000" }
+  - { variable: "net.core.netdev_max_backlog", value: "262144" }
+  - { variable: "net.core.optmem_max", value: "25165824" }
+  - { variable: "net.core.rmem_default", value: "2097152" }
+  - { variable: "net.core.rmem_max", value: "2097152" }
+  - { variable: "net.core.somaxconn", value: "65535" }
+  - { variable: "net.core.wmem_default", value: "2097152" }
+  - { variable: "net.core.wmem_max", value: "2097152" }
+  - { variable: "net.ipv4.tcp_rmem", value: "8192 87380 16777216" }
+  - { variable: "net.ipv4.tcp_wmem", value: "8192 65536 16777216" }
+  - { variable: "vm.dirty_background_ratio", value: "1" }
+  - { variable: "vm.dirty_ratio", value: "5" }
+  - { variable: "vm.swappiness", value: "10" }
 
 minio_servers: "\
   {% set _minio_servers = [] %}\
   {% for host in groups[group_names[0]] %}\
-    {% set _minio_cluster = minio_cluster | default('', true) %}\
-    {% if ( _minio_cluster == minio_cluster) %}\
-      {% if _minio_servers.append(hostvars[host]['ansible_host']) %}{% endif %}\
-    {% endif %}\
+  {% if _minio_servers.append(hostvars[host]['ansible_host']) %}{% endif %}\
   {% endfor %}\
   {{ _minio_servers }}"

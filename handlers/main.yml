@@ -1,3 +1,7 @@
 ---
-- include: 'RedHat.yml'
-  when: ansible_os_family == 'RedHat'
+- name: Enable Minio service.
+  systemd:
+    name: "minio.service"
+    enabled: "yes"
+    state: "restarted"
+    daemon_reload: "yes"

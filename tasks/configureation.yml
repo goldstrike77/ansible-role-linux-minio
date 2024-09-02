@@ -1,75 +1,51 @@
 ---
 - name: Add the group minio.
   group:
-    name: '{{ minio_arg.user }}'
-    gid: '{{ minio_arg.uid }}'
+    name: "minio-user"
+    gid: "{{ minio_arg.uid }}"
 
 - name: Add the user minio.
   user:
-    name: '{{ minio_arg.user }}'
-    comment: '{{ minio_arg.user }}'
-    create_home: 'no'
-    shell: '/sbin/nologin'
-    uid: '{{ minio_arg.uid }}'
-    group: '{{ minio_arg.user }}'
+    name: "minio-user"
+    comment: "Running user for MinIO"
+    create_home: "no"
+    shell: "/sbin/nologin"
+    uid: "{{ minio_arg.uid }}"
+    group: "minio-user"
 
 - name: Creating Minio events storage path.
   file:
-    dest: '{{ minio_path }}/minio/T_{{ item }}_events'
-    state: 'directory'
-    owner: '{{ minio_arg.user }}'
-    group: '{{ minio_arg.user }}'
-    mode: '0750'
-  loop: '{{ minio_tenants }}'
-
-- name: Creating Minio tenants drives.
-  file:
-    dest: '{{ minio_path }}/minio/T_{{ item.0 }}_d{{ item.1 }}'
-    state: 'directory'
-    owner: '{{ minio_arg.user }}'
-    group: '{{ minio_arg.user }}'
-    mode: '0750'
-  loop: '{{ minio_tenants|product(range(1,minio_drives+1,1)|list)|list }}'
-
-- name: Creating Minio tenants cache drives.
-  file:
-    dest: '{{ minio_path }}/cache/minio/T_{{ item.0 }}_d{{ item.1 }}'
-    state: 'directory'
-    owner: '{{ minio_arg.user }}'
-    group: '{{ minio_arg.user }}'
-    mode: '0750'
-  loop: '{{ minio_tenants|product(range(1,minio_drives+1,1)|list)|list }}'
-  when: minio_arg.cache | bool
+    dest: "{{ minio_path }}/minio"
+    state: "directory"
+    owner: "minio-user"
+    group: "minio-user"
+    mode: "0750"
 
 - name: Configure kernel parameters.
   sysctl:
-    name: '{{ item.variable }}'
-    value: '{{ item.value }}'
-    state: 'present'
-    reload: 'yes'
-    sysctl_set: 'yes'
-    sysctl_file: '/etc/sysctl.d/20-sysctl.conf'
-  loop: '{{ minio_kernel_parameters|flatten(levels=1) }}'
+    name: "{{ item.variable }}"
+    value: "{{ item.value }}"
+    state: "present"
+    reload: "yes"
+    sysctl_set: "yes"
+    sysctl_file: "/etc/sysctl.d/20-sysctl.conf"
+  loop: "{{ minio_kernel_parameters|flatten(levels=1) }}"
 
 - name: Minio configure file transfer.
   template:
-    src: 'minio.default.j2'
-    dest: '/etc/default/minio-T_{{ item }}'
-    owner: '{{ minio_arg.user }}'
-    group: '{{ minio_arg.user }}'
-    mode: '0640'
-  loop: '{{ minio_tenants }}'
-  loop_control:
-    index_var: index
+    src: "minio.default.j2"
+    dest: "/etc/default/minio"
+    owner: "minio-user"
+    group: "minio-user"
+    mode: "0640"
   no_log: true
   notify: Enable Minio service.
 
 - name: Minio systemd service file transfer.
   template:
-    src: 'minio.service.j2'
-    dest: '/lib/systemd/system/minio-T_{{ item }}.service'
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
-  loop: '{{ minio_tenants }}'
+    src: "minio.service.j2"
+    dest: "/lib/systemd/system/minio.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
   notify: Enable Minio service.

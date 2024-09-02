@@ -1,25 +1,21 @@
 ---
 # General parameters #
 minio_is_install: false # A boolean to determine whether or not to install the MinIO.
-minio_cluster: 'demo' # The Minio distributed cluster name.
 minio_path: '/data' # Specify the Minio data directory.
 minio_force_https: true # A boolean to determine whether or not to Encrypting HTTP client communications.
-minio_drives: 1 # Defines the number of drives per node.
-minio_tenants: # Specify the name of tenants.
-#  - 'others'
-  - 'thanos'
 
 # Role dependencies #
 minio_ngx_dept: false # A boolean value, whether proxy web interface and API traffic using NGinx.
 
 # Listen port #
-minio_api_start_port: '9000'
-minio_console_start_port: '9010'
+minio_api_port: '9000'
+minio_console_port: '9001'
 
 # NGinx parameters #
 minio_ngx_port_http: '80' # NGinx HTTP listen port.
 minio_ngx_port_https: '443' # NGinx HTTPs listen port.
-minio_ngx_client_max_body_size: '100m' # The maximum allowed size of the client request body.
+minio_ngx_client_max_body_size: '20480m' # The maximum allowed size of the client request body.
+minio_ngx_domains: ["obs.home.local","obs-console.home.local"]
 
 # System Variables #
 minio_arg:
@@ -38,11 +34,8 @@ minio_arg:
     - 'text/plain'
     - 'application/json'
   drive_sync: 'on' # Enable synchronous mode for all data operations.
-  uid: '2021'
-  ulimit_nofile: '65535'
-  ulimit_nproc: '65535'
-  user: 'minio'
   webui: 'on' # Enable or Disable access to web UI.
+  uid: '2021'
 
 # Bucket Notification Variables #
 #minio_events_arg: # Define the targets for bucket events can be published to.

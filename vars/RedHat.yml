@@ -1,9 +1,15 @@
-epel_repo_name: 'epel'
-epel_repo_url: 'http://mirrors.aliyun.com/epel/$releasever{% if ansible_distribution_major_version | int > 7 %}/Everything{% endif %}/$basearch/'
+minio_epel_repo_name: "epel"
+minio_epel_repo_url: "http://mirrors.aliyun.com/epel/$releasever{% if ansible_distribution_major_version | int > 7 %}/Everything{% endif %}/$basearch/"
 
 minio_dependent_packages:
-  - 'libselinux-utils'
-  - 'policycoreutils-python'
-  - 'python-boto'
-  - 'python-boto3'
-  - 'python-pip'
+  - "libselinux-utils"
+  - "policycoreutils-python-utils"
+  - "python3-boto3"
+  - "python3-cffi"
+  - "python3-cryptography"
+  - "python3-idna"
+  - "python3-paramiko"
+  - "python3-pip"
+  - "python3-pyOpenSSL"
+
+minio_repo_url: "http://dl.min.io/server/minio/release/linux-amd64/"

@@ -5,10 +5,57 @@
 
 - name: Gather tenants site variables for NGinx.
   set_fact:
-    minio_ngx_site: '{{ minio_ngx_site + [ { "domain": item + "." + datacenter + "." + domain ,"syntax":["location / {","  proxy_buffering off;","  proxy_set_header Host $http_host;","  proxy_http_version 1.1;","  proxy_read_timeout 15m;","  proxy_send_timeout 15m;","  proxy_request_buffering off;","  client_max_body_size "+minio_ngx_client_max_body_size+";","  valid_referers none "+item+";","  if ($invalid_referer) { return 403; }","  proxy_pass https://backend_" + item + "." + datacenter + "." + domain + "/;","}"],"backend_address": minio_servers,"backend_port": minio_api_start_port | int + 1 + index,"sticky": "ip_hash","keepaliv": ansible_processor_vcpus * 4 } ] }}'
-  loop: '{{ minio_tenants }}'
-  loop_control:
-    index_var: index
+    minio_ngx_site:
+      - domain: '{{ minio_ngx_domains[0] }}'
+        syntax:
+          - 'location / {'
+          - '  proxy_redirect off;'
+          - '  proxy_buffering off;'
+          - '  proxy_set_header Host $http_host;'
+          - '  proxy_set_header X-Real-IP $remote_addr;'
+          - '  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;'
+          - '  proxy_set_header X-Forwarded-Proto $scheme;'
+          - '  proxy_set_header Connection "";'
+          - '  proxy_http_version 1.1;'
+          - '  proxy_connect_timeout 300;'
+          - '  chunked_transfer_encoding off;'
+          - '  proxy_read_timeout 15m;'
+          - '  proxy_send_timeout 15m;'
+          - '  proxy_request_buffering off;'
+          - '  valid_referers none {{ minio_ngx_domains[0] }};'
+          - '  if ($invalid_referer) { return 403; }'
+          - '  client_max_body_size {{ minio_ngx_client_max_body_size }};'
+          - '  proxy_pass https://backend_{{ minio_ngx_domains[0] }};'
+          - '}'
+        backend_address: '{{ minio_servers }}'
+        backend_port: '{{ minio_api_port }}'
+        sticky: 'ip_hash'
+        keepalive: '{{ ansible_processor_vcpus * 4 }}'
+      - domain: '{{ minio_ngx_domains[1] }}'
+        syntax:
+          - 'location / {'
+          - '  proxy_redirect off;'
+          - '  proxy_set_header Host $http_host;'
+          - '  proxy_set_header X-Real-IP $remote_addr;'
+          - '  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;'
+          - '  proxy_set_header X-Forwarded-Proto $scheme;'
+          - '  proxy_set_header X-NginX-Proxy true;'
+          - '  real_ip_header X-Real-IP;'
+          - '  proxy_buffering off;'
+          - '  proxy_connect_timeout 300;'
+          - '  proxy_http_version 1.1;'
+          - '  proxy_set_header Upgrade $http_upgrade;'
+          - '  proxy_set_header Connection "upgrade";'
+          - '  proxy_set_header Origin "";'
+          - '  chunked_transfer_encoding off;'
+          - '  proxy_request_buffering off;'
+          - '  client_max_body_size {{ minio_ngx_client_max_body_size }};'
+          - '  proxy_pass https://backend_{{ minio_ngx_domains[1] }};'
+          - '}'
+        backend_address: '{{ minio_servers }}'
+        backend_port: '{{ minio_console_port }}'
+        sticky: 'ip_hash'
+        keepalive: '{{ ansible_processor_vcpus * 4 }}'
 
 - name: Role dependencies.
   include_role:

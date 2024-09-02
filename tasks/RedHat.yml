@@ -1,25 +1,42 @@
 ---
 - name: Include OS-specific variables.
-  include_vars: '{{ ansible_os_family }}.yml'
+  include_vars: "{{ ansible_os_family }}.yml"
 
 - name: Add EPEL YUM repositories.
   yum_repository:
-    name: '{{ epel_repo_name }}'
-    description: '{{ epel_repo_name }} YUM repo'
-    file: '{{ epel_repo_name }}'
-    baseurl: '{{ epel_repo_url }}'
-    gpgcheck: 'no'
-    sslverify: 'no'
-    timeout: '60'
+    name: "{{ minio_epel_repo_name }}"
+    description: "{{ minio_epel_repo_name }} YUM repo"
+    file: "{{ minio_epel_repo_name }}"
+    baseurl: "{{ minio_epel_repo_url }}"
+    gpgcheck: "no"
+    sslverify: "no"
+    timeout: "60"
 
 - name: Install the dependents packages.
   yum:
-    name: '{{ minio_dependent_packages }}'
-    state: 'present'
-    validate_certs: 'no'
-    disable_gpg_check: 'yes'
-    update_cache: 'no'
+    name: "{{ minio_dependent_packages }}"
+    state: "present"
+    validate_certs: "no"
+    disable_gpg_check: "yes"
+    update_cache: "no"
   register: yum_status
   until: yum_status is succeeded
+  retries: 5
+  delay: 2
+
+- name: Check current minio version
+  command: "/usr/local/bin/minio --version"
+  register: minio_current_version
+  changed_when: false
+  failed_when: false
+
+- name: Install the MinIO packages.
+  community.general.apt_rpm:
+    pkg: "{{ minio_repo_url }}minio.rpm"
+    state: "present"
+  when: minio_current_version.rc == 2
+  register: yum_status
+  until: yum_status is succeeded
+  notify: Enable Minio service.
   retries: 5
   delay: 2
